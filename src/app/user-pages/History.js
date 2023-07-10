@@ -46,7 +46,7 @@ export const History = () => {
   }
   const fetchSqrOrders = async () => {
     const res = await GETALL_SQRORDER_USER(username);
-    console.log(res.data);
+    setOrderArray(res);
   }
 
   const handleClick = (e) => {
