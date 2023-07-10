@@ -74,9 +74,9 @@ export const SQTable = () => {
                     <div className="card-body" style={{ color: 'white' }}>
                         <h4 className="card-title" style={{ color: 'white' }}>PortFolio</h4>
                         <div className="table-responsive">
-                            <table className="table table-striped" style={{color:'white'}}>
-                                <thead style={{background:'#10151a'}}>
-                                    <tr style={{background:'#10151a'}}>
+                            <table className="table table-striped" style={{ color: 'white' }}>
+                                <thead style={{ background: '#10151a' }}>
+                                    <tr style={{ background: '#10151a' }}>
 
                                         <th> Exchange </th>
                                         <th> Script | Expiry </th>
@@ -104,10 +104,10 @@ export const SQTable = () => {
                                                 <tr>
                                                     <td> {entry.exchange ?? "XXXX"} </td>
                                                     <td> {entry.symbol.split("-")[0] ?? "-"} | {formattedDate ?? "-"} </td>
+                                                    <td> {entry.order_type ?? "TYPE"} </td>
+                                                    <td> {entry.quantity ?? "000"} </td>
                                                     <td> {entry.averagePrice ?? "000.0"} </td>
                                                     <td> {entry.currentPrice ?? "000.0"} </td>
-                                                    <td> {entry.quantity ?? "000"} </td>
-                                                    <td> {entry.order_type ?? "TYPE"} </td>
                                                     <td> {entry.profitloss ? entry.profitloss : "000.0"} </td>
                                                     <td> {entry.profitlosswithbrkg ? entry.profitlosswithbrkg : "000.0"} </td>
                                                     <td> <button onClick={handleClick} value={entry.order_id} className='btn btn-primary'> S/O </button> </td>
