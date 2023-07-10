@@ -1,0 +1,64 @@
+.table tr {
+    background-color: #10151a !important;
+}
+
+th:first-child {
+    border-top-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+}
+
+td:first-child {
+
+    border-bottom-left-radius: 10px;
+}
+
+td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.table tr th {
+    background-color: black !important;
+}
+
+.table th,
+.table td {
+    padding: 0.9375rem 0.1rem 0.9rem 0.6rem;
+}
+
+.card .card-body {
+    padding: .5rem 0.5rem;
+}
+
+.table {
+    color: white;
+}
+
+thead {
+    background: '#10151a'
+}
+
+tr {
+    background: '#10151a'
+}
+
+.card {
+    background: rgba(156, 162, 173, 0.2705882353);
+    border-radius: '15px';
+}
+
+.card-body {
+    color: 'white';
+}
+
+.card .card-title {
+    color: white;
+}
+
+@media (max-width: 767px) {
+    .content-wrapper {
+        padding: 0.75rem 1.55rem;
+    }
+}

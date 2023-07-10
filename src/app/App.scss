@@ -1,0 +1,541 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* === Plugin styles === */
+
+@import "~react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+@import "~nouislider/distribute/nouislider.min.css";
+@import '~react-bootstrap-typeahead/css/Typeahead.css';
+@import '~react-bootstrap-typeahead/css/Typeahead-bs4.css';
+@import '~react-datepicker/dist/react-datepicker.css';
+
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+@import "../assets/styles/variables";
+@import "~compass-mixins/lib/compass";
+@import "~compass-mixins/lib/animate";
+@import "~bootstrap/scss/bootstrap";
+@import "../assets/styles/fonts";
+@import "../assets/styles/functions";
+
+/* === Icon fonts === */
+@import "~@mdi/font/scss/materialdesignicons";
+
+
+/* === Template mixins === */
+@import "../assets/styles/mixins/animation";
+@import "../assets/styles/mixins/badges";
+@import "../assets/styles/mixins/buttons";
+@import "../assets/styles/mixins/misc";
+@import "../assets/styles/mixins/color-functions";
+@import "../assets/styles/mixins/cards";
+@import "../assets/styles/mixins/blockqoute";
+@import "../assets/styles/mixins/popovers";
+@import "../assets/styles/mixins/tooltips";
+@import "../assets/styles/mixins/no-ui-slider";
+
+
+/* === Core Styles === */
+@import "../assets/styles/background";
+@import "../assets/styles/typography";
+@import "../assets/styles/reset";
+@import "../assets/styles/responsive";
+@import "../assets/styles/misc";
+@import "../assets/styles/utilities";
+@import "../assets/styles/demo";
+@import "../assets/styles/spinner";
+@import "../assets/styles/dashboard";
+
+/* === Components === */
+
+@import "../assets/styles/components/widgets";
+@import "../assets/styles/components/forms";
+@import "../assets/styles/components/checkbox-radio";
+@import "../assets/styles/components/icons";
+@import "../assets/styles/components/tables";
+@import "../assets/styles/components/accordions";
+@import "../assets/styles/components/buttons";
+@import "../assets/styles/components/breadcrumbs";
+@import "../assets/styles/components/badges";
+@import "../assets/styles/components/cards";
+@import "../assets/styles/components/preview";
+@import "../assets/styles/components/tooltips";
+@import "../assets/styles/components/user-profile";
+@import "../assets/styles/components/popovers";
+@import "../assets/styles/components/lists";
+@import "../assets/styles/components/bootstrap-progress";
+@import "../assets/styles/components/bootstrap-alerts";
+@import "../assets/styles/components/tabs";
+@import "../assets/styles/components/dropdowns";
+@import "../assets/styles/components/pagination";
+@import "../assets/styles/components/loaders/loaders";
+@import "../assets/styles/components/timeline";
+@import "../assets/styles/components/portfolio";
+@import "../assets/styles/components/pricing-table";
+@import "../assets/styles/components/email/mail-list-container";
+@import "../assets/styles/components/email/mail-sidebar";
+@import "../assets/styles/components/email/message-content";
+@import "../assets/styles/components/todo-list";
+@import "../assets/styles/components/spinner";
+@import "../assets/styles/components/tickets";
+@import "../assets/styles/components/project-list";
+@import "../assets/styles/components/product-tile";
+@import "../assets/styles/components/user-listing";
+@import "../assets/styles/components/landing";
+@import "../assets/styles/components/chats";
+@import "../assets/styles/components/kanban";
+@import "../assets/styles/components/react-table";
+
+@import "../assets/styles/components/landing-screens/auth";
+
+/* === Plugin Overrides === */
+@import "../assets/styles/components/plugin-overrides/contex-menu";
+@import "../assets/styles/components/plugin-overrides/no-ui-slider";
+@import "../assets/styles/components/plugin-overrides/slick-carousel";
+@import "../assets/styles/components/plugin-overrides/rating";
+@import "../assets/styles/components/plugin-overrides/date-picker";
+@import "../assets/styles/components/plugin-overrides/wizard";
+@import "../assets/styles/components/plugin-overrides/react-bootstrap-table";
+@import "../assets/styles/components/plugin-overrides/sweet-alert";
+@import "../assets/styles/components/plugin-overrides/full-calendar";
+@import "../assets/styles/components/plugin-overrides/react-photo-gallery";
+@import "../assets/styles/components/plugin-overrides/react-tag-autocomplete";
+@import "../assets/styles/components/plugin-overrides/jquery-jvectormap";
+@import "../assets/styles/components/plugin-overrides/react-table";
+
+/* === Layout === */
+@import "../assets/styles/navbar";
+@import "../assets/styles/sidebar";
+@import "../assets/styles/footer";
+@import "../assets/styles/layout";
+@import "../assets/styles/settings-panel";
+
+.mp_theme {
+    color: #fff;
+    border-radius: 20px 20px 20px 20px;
+    padding-top: 10px;
+}
+
+::selection {
+    background: #FFF6F4;
+    color: #525FE1;
+}
+
+.mp_theme .script_title {
+    color: gray;
+}
+
+.left_side_mp_theme {
+    text-align: left;
+    padding-left: 0px !important;
+}
+
+.invoice_instu_box {
+    box-shadow: 2px 2px 15px -5px;
+    margin-top: 20px;
+}
+
+.table td {
+    font-size: 12px;
+}
+
+.table tr {
+    background-color: white !important;
+}
+
+
+.textcenter {
+    // text-align: center;
+    position: relative;
+    left: 400px;
+    top: 50px;
+}
+
+.invoice_instu_title {
+    font-size: 20px;
+    padding-top: 0px;
+}
+
+.watchlist-entry {
+    padding: 10px;
+    border-radius: 15px;
+    background: #9ca2ad45;
+    transition: all 0.2s ease-in-out;
+}
+
+.bcfb4-color {
+    color: #1bcfb4 !important;
+}
+
+.watchlist-entry:hover {
+    transform: scale(1.02);
+}
+
+.removespc {
+    font-size: 14px;
+    color: #e9e4e4;
+
+}
+
+
+
+.left_side_mp_theme .ltp {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.left_side_mp_theme .net_change {
+    font-size: 12px;
+}
+
+@media only screen and (min-width: 600px) {
+    .right_side_mp_theme {
+        text-align: right;
+        padding-right: 10px !important;
+        display: flex;
+        align-items: center;
+    }
+    .ltp {
+        display: flex;
+        align-items: center;
+    } 
+    .mini_footer_mw_single_entity {
+        display: flex;
+        align-items: center;
+    }
+    .net_change{
+        display: flex;
+        align-items: center;
+    }
+    .watchlist-entry{
+        height: 70px;
+        display: flex;
+        align-items: center;
+    }
+    .left_side_mp_theme{
+        width: 150px;
+    }
+
+  }
+
+.right_side_mp_theme {
+    text-align: right;
+    padding-right: 10px !important;
+}
+
+
+.right_side_mp_theme .buy_price_wrapper_mp_theme {
+    border-left: 2px solid #c1c1c1;
+}
+
+.right_side_mp_theme .sell_price {
+    font-size: 15px;
+    font-weight: bold;
+    /*text-align: right;*/
+}
+
+.right_side_mp_theme .buy_price {
+    font-size: 15px;
+    font-weight: bold;
+    /*text-align: left;*/
+}
+
+
+
+.mini_footer_mw_single_entity {
+    text-align: center;
+    color: gray;
+}
+
+.mini_footer_mw_single_entity .script_entity {
+    padding: 0px 2px;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.profile-text {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: black;
+    margin-top: 10px;
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+.profile-img {
+    height: 90px;
+    width: 90px;
+    border: 3px solid;
+    border-color: transparent;
+    border-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.profile-area {
+    padding: 0 0 15px;
+    text-align: center;
+}
+
+.profile-content p {
+    margin-bottom: 0;
+}
+
+.profile-content-div {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 7px;
+}
+
+.profile-button {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem;
+    font-size: medium;
+}
+
+.btn-1 {
+    padding: 5px 15px;
+}
+
+.btn-1:hover {
+    background-color: #c1c1c1c4;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.share-modal p {
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    color: #3e3e3e;
+    ;
+    text-align: center;
+}
+
+.modal-input {
+    width: 90%;
+    border-radius: 20px;
+    padding: 6px;
+    border: 1px solid gray;
+    text-align: center;
+    font-size: larger;
+}
+
+.modal-input-2 {
+    width: 75%;
+    border-radius: 20px;
+    padding: 2px;
+    border: 1px solid gray;
+    text-align: center;
+    font-size: x-large;
+}
+
+.modal-input:focus,
+.modal-input-2:focus {
+    border: 3px solid rgba(0, 0, 255, 0.719);
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #333;
+    color: #fff;
+}
+
+.buy-btn {
+    padding: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 10px 0px;
+    color: #fff;
+    font-weight: bold;
+    width: 100%;
+}
+
+.sell-btn {
+    padding: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 10px 0px;
+    color: #fff;
+    font-weight: bold;
+    width: 100%;
+}
+
+.settings-content-header {
+    color: white;
+    position: relative;
+    padding: 15px 15px 0 15px;
+    background-color: transparent;
+}
+
+.settings-content-header small {
+    font-size: 15px;
+    display: inline-block;
+    padding-left: 4px;
+    font-weight: 300;
+}
+
+.settings-second-div select,
+.orderbook-select select {
+    appearance: none;
+    outline: 0;
+    background-image: none;
+    width: 100%;
+    height: 100%;
+    color: gray;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+.settings-second-div .select,
+.orderbook-select .select {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: .25em;
+    padding-bottom: 10px;
+}
+
+.select:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 28px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: black transparent transparent transparent;
+}
+
+.settings-second-div input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 2px;
+    padding: 6px;
+}
+
+.settings-second-div .btn {
+    margin-left: -2rem;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.settings-second-div input:focus {
+    border: 1px solid gray;
+}
+
+.suggestion-container {
+    position: relative;
+}
+
+.suggestion-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.suggestion-item {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f5f5f5;
+}
+
+.tab-button {
+    transition: all 0.3s ease;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid white;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.button-loader {
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.increase {
+    background-color: #0c51c4;
+    color: white;
+}
+
+.decrease {
+    background-color: #BF2114;
+    color: white;
+}
+
+.increase1 {
+    color: #0c51c4 !important;
+}
+
+.decrease1 {
+    color: #ff3535 !important;
+}
