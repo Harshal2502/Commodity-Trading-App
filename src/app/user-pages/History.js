@@ -25,7 +25,7 @@ export const History = () => {
 
   const fetchAllOrders = async () => {
     const res = await GET_ALL_ORDERS_BY_USER(username);
-    setOrderArray(res);
+    setOrderArray(res.Orders);
   }
 
   const fetchPlacedOrders = async () => {
@@ -115,7 +115,7 @@ export const History = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">OrderBook ({orderArray.length})</h4>
+              <h4 className="card-title">OrderBook ({orderArray?.length})</h4>
               {loader ? <div style={{ textAlign: "center", margin: "1.5rem" }}><span className="loader"></span></div> : ""}
               <div className="table-responsive">
                 <table className="table table-striped">
