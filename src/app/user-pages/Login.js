@@ -21,7 +21,7 @@ export const Login = () => {
     setpass(e.target.value);
   }
   const handleunameChange = (e) => {
-    setuname((e.target.value).toLowerCase());
+    setuname(e.target.value);
   }
 
   const handleSubmit = async (e) => {
