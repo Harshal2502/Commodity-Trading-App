@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ADMIN_USERS, DELETE_USER } from '../../utils/API';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,9 @@ const ManageUsers = () => {
     };
   });
 
+
+  const navigate = useNavigate();
+
   const [userArray, setUserArray] = useState([]);
 
   useEffect(() => {
@@ -27,7 +30,6 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     const res = await ADMIN_USERS(username);
-    console.log(res)
     setUserArray(res.users);
   }
 
@@ -44,6 +46,11 @@ const ManageUsers = () => {
 
       fetchUsers();
     }
+  }
+
+  const handleEdit = ( entry ) => {
+    console.log(entry)
+    navigate('/master_spa/edituser', { state: entry });
   }
 
   return (
@@ -103,24 +110,24 @@ const ManageUsers = () => {
                     return (
                       <tbody>
                         <tr>
-                          <td>{entry.username}</td>
-                          <td>{entry.fullname}</td>
-                          <td>{formattedDate} ({formattedTime})</td>
-                          <td>{entry.assetoptions.MCX_allow ? "YES" : "No"}</td>
-                          <td>{entry.assetoptions.FONSE_allow ? "YES" : "No"}</td>
-                          <td>{entry.assetoptions.brokereage_NFO}</td>
-                          <td>{entry.assetoptions.brokereage_MCX}</td>
-                          <td>{entry.assetoptions.profit_limit}</td>
-                          <td>{entry.assetoptions.margin_limit}</td>
-                          <td>
-                            <i
-                              className="mdi mdi-pencil-box"
-                              style={{ fontSize: 'large' }}
-                            ></i>
-                          </td>
-                          <td>
-                            <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
-                          </td>
+                          <td> {entry.username} </td>
+                          <td> {entry.fullname} </td>
+                          <td> {formattedDate} ({formattedTime}) </td>
+                          <td> {entry.assetoptions.MCX_allow ? "YES" : "No"} </td>
+                          <td> {entry.assetoptions.FONSE_allow ? "YES" : "No"} </td>
+                          <td> {entry.assetoptions.brokereage_NFO} </td>
+                          <td> {entry.assetoptions.brokereage_MCX} </td>
+                          <td> {entry.assetoptions.profit_limit} </td>
+                          <td> {entry.assetoptions.margin_limit} </td>
+                            <td onClick={() => handleEdit(entry)}>
+                              <i
+                                className="mdi mdi-pencil-box"
+                                style={{ fontSize: 'large' }}
+                              ></i>
+                            </td>
+                            <td>
+                              <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
+                            </td>
                         </tr>
                       </tbody>
                     )

@@ -126,8 +126,8 @@ const Navbar = () => {
     document.querySelector(".right-sidebar").classList.toggle("open");
   };
 
-  const loc = window.location.pathname.includes("/subadmin_spa/")
-    ? "/subadmin_login"
+  const loc = window.location.pathname.includes("/master_spa/")
+    ? "/master_login"
     : "/login";
 
   const handleSignout = async (e) => {

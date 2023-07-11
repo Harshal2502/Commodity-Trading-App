@@ -50,6 +50,7 @@ const App = () => {
       '/master_spa/invoice',
       '/master_spa/summary',
       '/master_spa/settings',
+      '/master_spa/edituser',
     ];
 
     const superadminRoutes = [

@@ -4,6 +4,7 @@ import Spinner from '../app/shared/Spinner';
 import { RequireAuth } from './shared/RequireAuth';
 import { SuperadminAuth } from './shared/SuperadminAuth';
 import SuperTransaction from './super-admin-pages/Transaction';
+import { EditUser } from './shared/EditUser';
 
 const Login = lazy(() => import('./user-pages/Login'));
 const Dashboard = lazy(() => import('./user-pages/Dashboard'));
@@ -84,6 +85,7 @@ const AppRoutes = () => {
         <Route path="/master_spa/invoice" element={<RequireAuth><Invoices /></RequireAuth>} />
         <Route path="/master_spa/summary" element={<RequireAuth><Summarys /></RequireAuth>} />
         <Route path="/master_spa/settings" element={<RequireAuth><Settingss /></RequireAuth>} />
+        <Route path="/master_spa/edituser" element={<RequireAuth><EditUser /></RequireAuth>} />
 
 
         {/* Super Admin Routes */}
