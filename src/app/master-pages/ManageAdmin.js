@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ADMIN_USERS, DELETE_USER } from '../../utils/API';
+import { Link } from 'react-router-dom';
+import { ADMIN_USERS, DELETE_ADMIN, DELETE_USER, SUPERADMIN_ADMINS } from '../../utils/API';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ManageUsers = () => {
+const ManageAdmin = () => {
 
   const { username } = useSelector((state) => {
     if (!state) {
@@ -19,9 +19,6 @@ const ManageUsers = () => {
     };
   });
 
-
-  const navigate = useNavigate();
-
   const [userArray, setUserArray] = useState([]);
 
   useEffect(() => {
@@ -29,15 +26,16 @@ const ManageUsers = () => {
   }, []);
 
   const fetchUsers = async () => {
-    const res = await ADMIN_USERS(username);
-    setUserArray(res.users);
+    const res = await SUPERADMIN_ADMINS(username);
+    console.log(res)
+    setUserArray(res.admins);
   }
 
   const suspendUser = async (user) => {
     const consent = window.confirm("are you sure want to suspend " + user + "?");
     if (consent === true) {
-      const res = await DELETE_USER(username, user);
-      toast.success(res.message, {
+      const res = await DELETE_ADMIN(username, user);
+      toast.warning(res.message, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
         hideProgressBar: false,
@@ -48,24 +46,19 @@ const ManageUsers = () => {
     }
   }
 
-  const handleEdit = ( entry ) => {
-    console.log(entry)
-    navigate('/master_spa/edituser', { state: entry });
-  }
-
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title"> User Management </h3>
+        <h3 className="page-title"> Master Management </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <a href="!#" onClick={(event) => event.preventDefault()}>
-                User Management
+                Master Management
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Manage Your Users
+              Manage Your Masters
             </li>
           </ol>
         </nav>
@@ -73,8 +66,8 @@ const ManageUsers = () => {
 
       <div className="card-body">
         <form className="form-inline">
-          <Link to="/master_spa/add_user" className="btn btn-gradient-primary mb-2">
-            <i className="mdi mdi-account-plus"></i> ADD USER
+          <Link to="/supermaster_main/add_admin" className="btn btn-gradient-primary mb-2">
+            <i className="mdi mdi-account-plus"></i> ADD MASTER
           </Link>
         </form>
       </div>
@@ -84,7 +77,7 @@ const ManageUsers = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Users List ({userArray.length})</h4>
+              <h4 className="card-title">Admin List ({userArray?.length})</h4>
               <div className="table-responsive">
                 <table className="table table-striped">
                   <thead>
@@ -92,46 +85,39 @@ const ManageUsers = () => {
                       <th> UserCode </th>
                       <th> Name </th>
                       <th> Reg. Date </th>
-                      <th> MCX Allow </th>
-                      <th> FONSE Allow </th>
-                      <th> NFO-BKRG </th>
-                      <th> MCX-BKRG </th>
-                      <th> Upper-Limit </th>
-                      <th> Margin-Limit(x) </th>
                       <th> Edit User </th>
                       <th> Delete User </th>
                     </tr>
                   </thead>
+
+
                   {userArray?.map((entry) => {
-                    const date = new Date(entry.createdat);
+
+                    const date = new Date(entry.createdAt);
                     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
                     const formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 
                     return (
                       <tbody>
                         <tr>
-                          <td> {entry.username} </td>
-                          <td> {entry.fullname} </td>
-                          <td> {formattedDate} ({formattedTime}) </td>
-                          <td> {entry.assetoptions.MCX_allow ? "YES" : "No"} </td>
-                          <td> {entry.assetoptions.FONSE_allow ? "YES" : "No"} </td>
-                          <td> {entry.assetoptions.brokereage_NFO} </td>
-                          <td> {entry.assetoptions.brokereage_MCX} </td>
-                          <td> {entry.assetoptions.profit_limit} </td>
-                          <td> {entry.assetoptions.margin_limit} </td>
-                            <td onClick={() => handleEdit(entry)}>
-                              <i
-                                className="mdi mdi-pencil-box"
-                                style={{ fontSize: 'large' }}
-                              ></i>
-                            </td>
-                            <td>
-                              <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
-                            </td>
+                          <td>{entry.username}</td>
+                          <td>{entry.fullname}</td>
+                          <td>{formattedDate} ({formattedTime})</td>
+                          <td>
+                            <i
+                              className="mdi mdi-pencil-box"
+                              style={{ fontSize: 'large' }}
+                            ></i>
+                          </td>
+                          <td>
+                            <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
+                          </td>
                         </tr>
                       </tbody>
                     )
                   })}
+
+
                 </table>
               </div>
             </div>
@@ -143,4 +129,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default ManageAdmin;

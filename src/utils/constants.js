@@ -61,5 +61,6 @@ export const API_ROUTES = {
   GET_PORTFOLIO_ALLUSERS: BASEAPI_PATH + "/api/portfolio/getPortfolioAllUsers",
   GET_CALL_PUT: BASEAPI_PATH + "/api/home/getCallPut",
   GET_STRIKE_PRICE: BASEAPI_PATH + "/api/home/getStrikePrice",
+  EDIT_USER: BASEAPI_PATH + "/api/user/admin/UpdateAssetOptionsSingleUser",
   
 };

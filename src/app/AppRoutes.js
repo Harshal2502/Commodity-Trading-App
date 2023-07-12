@@ -4,7 +4,10 @@ import Spinner from '../app/shared/Spinner';
 import { RequireAuth } from './shared/RequireAuth';
 import { SuperadminAuth } from './shared/SuperadminAuth';
 import SuperTransaction from './super-admin-pages/Transaction';
-import { EditUser } from './shared/EditUser';
+import MasterTransaction from './master-pages/Transaction';
+import { MasterAuth } from './shared/MasterAuth';
+
+
 
 const Login = lazy(() => import('./user-pages/Login'));
 const Dashboard = lazy(() => import('./user-pages/Dashboard'));
@@ -16,6 +19,9 @@ const History = lazy(() => import('./user-pages/History'));
 const Invoice = lazy(() => import('./user-pages/Invoice'));
 const Summary = lazy(() => import('./user-pages/Summary'));
 const Settings = lazy(() => import('./user-pages/Settings'));
+
+
+
 const Subadmin_Login = lazy(() => import('./sub-admin-pages/Subadmin_Login'));
 const OrderBooks = lazy(() => import('./sub-admin-pages/OrderBook'));
 const Dashboards = lazy(() => import('./sub-admin-pages/Dashboard'));
@@ -31,6 +37,9 @@ const Invoices = lazy(() => import('./sub-admin-pages/Invoice'));
 const Summarys = lazy(() => import('./sub-admin-pages/Summary'));
 const Settingss = lazy(() => import('./sub-admin-pages/Settings'));
 const Error404 = lazy(() => import('./error-pages/Error404'));
+
+
+
 const Superadmin_Login = lazy(() => import('./super-admin-pages/Superadmin_Login'));
 const SuperDashboard = lazy(() => import('./super-admin-pages/Dashboard'));
 const SuperOrderBook = lazy(() => import('./super-admin-pages/OrderBook'));
@@ -49,12 +58,43 @@ const SuperSettings = lazy(() => import('./super-admin-pages/Settings'));
 
 
 
+const MasterLogin = lazy(() => import('./master-pages/Superadmin_Login'));
+const MasterDashboard = lazy(() => import('./master-pages/Dashboard'));
+const MasterOrderbook = lazy(() => import('./master-pages/OrderBook'));
+const MasterPortFolio = lazy(() => import('./master-pages/PortFolio'));
+const MasterNotifications = lazy(() => import('./master-pages/Notifications'));
+const MasterAccount = lazy(() => import('./master-pages/Account'));
+const MasterBackoffice = lazy(() => import('./master-pages/Backoffice'));
+const MasterHistory = lazy(() => import('./master-pages/History'));
+const MasterManageUsers = lazy(() => import('./master-pages/ManageUsers'));
+const MasterAddUser = lazy(() => import('./master-pages/AddUser'));
+const MasterManageAdmin = lazy(() => import('./master-pages/ManageAdmin'));
+const MasterAddAdmin = lazy(() => import('./master-pages/AddAdmin'));
+const MasterInvoice = lazy(() => import('./master-pages/Invoice'));
+const MasterSummary = lazy(() => import('./master-pages/Summary'));
+const MasterSettings = lazy(() => import('./master-pages/Settings'));
+const ManageSuperadmin = lazy(() => import('./master-pages/ManageSuperadmin'))
+
+
+
+
+
+
+
 const AppRoutes = () => {
+
+
   return (
+
+
     <Suspense fallback={<Spinner />}>
       <Routes>
 
         <Route path="/error-pages/error-404" element={<Error404 />} />
+
+
+
+
 
         {/* User Routes */}
         <Route path="/login" element={<Login />} />
@@ -68,6 +108,10 @@ const AppRoutes = () => {
         <Route path="/invoice" element={<RequireAuth><Invoice /></RequireAuth>} />
         <Route path="/summary" element={<RequireAuth><Summary /></RequireAuth>} />
         <Route path="/settings" element={<RequireAuth><Settings /></RequireAuth>} />
+
+
+
+
 
         {/* Sub Admin Routes */}
         <Route path="/master_login" element={<Subadmin_Login />} />
@@ -85,7 +129,9 @@ const AppRoutes = () => {
         <Route path="/master_spa/invoice" element={<RequireAuth><Invoices /></RequireAuth>} />
         <Route path="/master_spa/summary" element={<RequireAuth><Summarys /></RequireAuth>} />
         <Route path="/master_spa/settings" element={<RequireAuth><Settingss /></RequireAuth>} />
-        <Route path="/master_spa/edituser" element={<RequireAuth><EditUser /></RequireAuth>} />
+
+
+
 
 
         {/* Super Admin Routes */}
@@ -107,9 +153,38 @@ const AppRoutes = () => {
         <Route path="/supermaster_main/summary" element={<SuperadminAuth><SuperSummary /></SuperadminAuth>} />
         <Route path="/supermaster_main/settings" element={<SuperadminAuth><SuperSettings /></SuperadminAuth>} />
 
+
+
+
+
+
+        {/* Master Routes */}
+        <Route path="/admin_login" element={<MasterLogin />} />
+        <Route path="/admin_admin/loaded" element={<MasterAuth><MasterDashboard /></MasterAuth>} />
+        <Route path="/admin_admin/marketwatch" element={<MasterAuth><MasterDashboard /></MasterAuth>} />
+        <Route path="/admin_admin/orderbook" element={<MasterAuth><MasterOrderbook /></MasterAuth>} />
+        <Route path="/admin_admin/portfolio" element={<MasterAuth><MasterPortFolio /></MasterAuth>} />
+        <Route path="/admin_admin/notifications" element={<MasterAuth><MasterNotifications /></MasterAuth>} />
+        <Route path="/admin_admin/transaction" element={<MasterAuth><MasterTransaction /></MasterAuth>} />
+        <Route path="/admin_admin/account" element={<MasterAuth><MasterAccount /></MasterAuth>} />
+        <Route path="/admin_admin/backoffice" element={<MasterAuth><MasterBackoffice /></MasterAuth>} />
+        <Route path="/admin_admin/history" element={<MasterAuth><MasterHistory /></MasterAuth>} />
+        <Route path="/admin_admin/manage_users" element={<MasterAuth><MasterManageUsers /></MasterAuth>} />
+        <Route path="/admin_admin/manage_masters" element={<MasterAuth><MasterManageAdmin /></MasterAuth>} />
+        <Route path="/admin_admin/manage_supermasters" element={<MasterAuth><ManageSuperadmin /></MasterAuth>} />
+        <Route path="/admin_admin/add_user" element={<MasterAuth><MasterAddUser /></MasterAuth>} />
+        <Route path="/admin_admin/add_master" element={<MasterAuth><MasterAddAdmin /></MasterAuth>} />
+        <Route path="/admin_admin/add_supermaster" element={<MasterAuth><MasterAddAdmin /></MasterAuth>} />
+        <Route path="/admin_admin/invoice" element={<MasterAuth><MasterInvoice /></MasterAuth>} />
+        <Route path="/admin_admin/summary" element={<MasterAuth><MasterSummary /></MasterAuth>} />
+        <Route path="/admin_admin/settings" element={<MasterAuth><MasterSettings /></MasterAuth>} />
+
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Suspense>
+
+
+
   );
 };
 

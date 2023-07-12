@@ -1080,3 +1080,34 @@ export const GET_STRIKE_PRICE = async (exchange, instrument, product, callput) =
   }
 
 }
+
+export const EDIT_USER = async (admin, user, formData) => {
+
+  const query = {
+    params: {
+      username_admin: admin,
+      username_user: user,
+    },
+  };
+
+  const body = {
+    MCX_allow: formData.MCX_allow,
+    FONSE_allow: formData.FONSE_allow,
+    brokereage_MCX: formData.brokereage_MCX,
+    brokereage_NFO: formData.brokereage_NFO,
+    profit_limit: formData.profit_limit,
+    margin_limit: formData.margin_limit,
+  };
+
+  console.log(query)
+  console.log(body)
+
+  try {
+    const res = await axios.patch(API_ROUTES.EDIT_USER, query, body);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}

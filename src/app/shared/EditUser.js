@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { EDIT_USER } from '../../utils/API';
 
 export const EditUser = () => {
 
@@ -25,21 +26,17 @@ export const EditUser = () => {
     const [disabled2, setDisabled2] = useState(false);
     const [loader, setLoader] = useState(false);
 
-    useEffect(() => {
-        console.log(state);
-    }, []);
-
     const [formData, setFormData] = useReducerPlus({
-        fullname: "",
-        username: "",
+        // fullname: "",
+        username: state.username,
         password: "",
-        MCX_allow: true,
-        FONSE_allow: true,
-        brokereage_MCX: "200",
-        brokereage_NFO: "200",
-        profit_limit: "0",
-        margin_limit: "500",
-        admin: username
+        MCX_allow: state.assetoptions.MCX_allow,
+        FONSE_allow: state.assetoptions.FONSE_allow,
+        brokereage_MCX: state.assetoptions.brokereage_MCX,
+        brokereage_NFO: state.assetoptions.brokereage_NFO,
+        profit_limit: state.assetoptions.profit_limit,
+        margin_limit: state.assetoptions.margin_limit,
+        // admin: username
     });
 
     const handleInputChange = (e) => {
@@ -55,20 +52,19 @@ export const EditUser = () => {
     const handleSubmit = async () => {
         setLoader(true);
 
-        console.log(formData)
-
-        // try {
-        //   const res = await CREATE_USER(formData, formData.admin);
-        //   toast.success(res.message, {
-        //     position: toast.POSITION.TOP_RIGHT,
-        //     autoClose: 3000,
-        //     hideProgressBar: false,
-        //     pauseOnHover: true,
-        //   });
-        // }
-        // catch (err) {
-        //   console.log(err);
-        // }
+        try {
+            const res = await EDIT_USER(username, state.username, formData);
+            console.log(res);
+            //   toast.success(res.message, {
+            //     position: toast.POSITION.TOP_RIGHT,
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     pauseOnHover: true,
+            //   });
+        }
+        catch (err) {
+            console.log(err);
+        }
         setLoader(false);
 
     }
@@ -154,22 +150,22 @@ export const EditUser = () => {
                 <div className="col-md-6 grid-margin stretch-card ">
                     <div className="card ">
                         <div className="card-body">
-                            <h4 className="card-title" >Register a New User</h4>
+                            <h4 className="card-title" > Edit User </h4>
                             <p className="card-description"> </p>
 
                             <form className="forms-sample">
                                 <Form.Group>
-                                    <label htmlFor="exampleInputUsername1">Full Name</label>
-                                    <Form.Control disabled name="fullname" value={state.username} onChange={handleInputChange} type="text" id="exampleInputUsername1" placeholder="username" size="lg" />
+                                    <label htmlFor="exampleInputUsername1">Usercode</label>
+                                    <Form.Control disabled name="fullname" defaultValue={state.username} onChange={handleInputChange} type="text" id="exampleInputUsername1" placeholder="username" size="lg" />
                                 </Form.Group>
                                 <Form.Group>
                                     <label htmlFor="exampleInputPassword1">Password</label>
-                                    <Form.Control name='password' type="password" value={state.password} onChange={handleInputChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                    <Form.Control name='password' type="password" defaultValue={state.password} onChange={handleInputChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
                                 </Form.Group>
 
                                 <Form.Group>
                                     <label>Select MCX</label>
-                                    <select name='MCX_allow' value={state.MCX_allow} onChange={handleInputChange} class="form-control">
+                                    <select name='MCX_allow' defaultValue={state.assetoptions.MCX_allow} onChange={handleInputChange} class="form-control">
                                         <option selected disabled>MCX Allow?</option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
@@ -178,7 +174,7 @@ export const EditUser = () => {
 
                                 <Form.Group>
                                     <label>Select FONSE</label>
-                                    <select name='FONSE_allow' value={state.FONSE_allow} onChange={handleInputChange} class="form-control">
+                                    <select name='FONSE_allow' defaultValue={state.assetoptions.FONSE_allow} onChange={handleInputChange} class="form-control">
                                         <option selected disabled>FONSE Allow?</option>
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
@@ -188,7 +184,7 @@ export const EditUser = () => {
 
                                 <Form.Group>
                                     <label>Brokerage for MCX</label>
-                                    <select disabled={disabled} name='brokereage_MCX' value={state.brokereage_MCX} onChange={handleInputChange} class="form-control">
+                                    <select disabled={disabled} name='brokereage_MCX' defaultValue={state.assetoptions.brokereage_MCX} onChange={handleInputChange} class="form-control">
                                         <option disabled selected>Select Brokerage for MCX</option>
                                         {options1?.map((state) => {
                                             return (
@@ -201,7 +197,7 @@ export const EditUser = () => {
 
                                 <Form.Group>
                                     <label>Brokerage for FONSE</label>
-                                    <select disabled={disabled2} name='brokereage_NFO' value={state.brokereage_NFO} onChange={handleInputChange} class="form-control">
+                                    <select disabled={disabled2} name='brokereage_NFO' defaultValue={state.assetoptions.brokereage_NFO} onChange={handleInputChange} class="form-control">
                                         <option disabled selected>Select Brokerage for NFO</option>
                                         {options1?.map((state) => {
                                             return (
@@ -214,13 +210,13 @@ export const EditUser = () => {
 
                                 <Form.Group>
                                     <label htmlFor="exampleInputConfirmPassword1">Profit Limit of User...! (0 = No Limit)</label>
-                                    <Form.Control name='profit_limit' value={state.profit_limit} onChange={handleInputChange} type="number" className="form-control" id="exampleInputConfirmPassword1" placeholder="0" />
+                                    <Form.Control name='profit_limit' defaultValue={state.assetoptions.profit_limit} onChange={handleInputChange} type="number" className="form-control" id="exampleInputConfirmPassword1" placeholder="0" />
                                 </Form.Group>
                                 <Form.Group>
                                     <label htmlFor="exampleInputConfirmPassword1">Margin Limit (X)</label>
-                                    <Form.Control name='margin_limit' value={state.margin_limit} onChange={handleInputChange} type="number" className="form-control" id="exampleInputConfirmPassword1" placeholder="500" />
+                                    <Form.Control name='margin_limit' defaultValue={state.assetoptions.margin_limit} onChange={handleInputChange} type="number" className="form-control" id="exampleInputConfirmPassword1" placeholder="500" />
                                 </Form.Group>
-                                <button type="submit" onClick={e => { e.preventDefault(); handleSubmit(); }} className="btn btn-gradient-primary mr-2">{loader ? <span className='button-loader'></span> : "Register"}</button>
+                                <button type="submit" onClick={e => { e.preventDefault(); handleSubmit(); }} className="btn btn-gradient-primary mr-2">{loader ? <span className='button-loader'></span> : "Save Changes"}</button>
                             </form>
 
                         </div>

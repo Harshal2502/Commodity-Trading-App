@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ADMIN_USERS, DELETE_USER } from '../../utils/API';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,17 +10,14 @@ const ManageUsers = () => {
 
   const { username } = useSelector((state) => {
     if (!state) {
-      return {
+      return { 
         username: null
-      };
+       };
     }
     return {
       username: state.username
     };
   });
-
-
-  const navigate = useNavigate();
 
   const [userArray, setUserArray] = useState([]);
 
@@ -30,6 +27,7 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     const res = await ADMIN_USERS(username);
+    console.log(res)
     setUserArray(res.users);
   }
 
@@ -37,20 +35,15 @@ const ManageUsers = () => {
     const consent = window.confirm("are you sure want to suspend " + user + "?");
     if (consent === true) {
       const res = await DELETE_USER(username, user);
-      toast.success(res.message, {
+      toast.warning(res.message, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
         hideProgressBar: false,
         pauseOnHover: true,
-      });
+    });
 
       fetchUsers();
     }
-  }
-
-  const handleEdit = ( entry ) => {
-    console.log(entry)
-    navigate('/master_spa/edituser', { state: entry });
   }
 
   return (
@@ -84,7 +77,7 @@ const ManageUsers = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Users List ({userArray.length})</h4>
+              <h4 className="card-title">Users List (0)</h4>
               <div className="table-responsive">
                 <table className="table table-striped">
                   <thead>
@@ -103,31 +96,32 @@ const ManageUsers = () => {
                     </tr>
                   </thead>
                   {userArray?.map((entry) => {
-                    const date = new Date(entry.createdat);
+                    const date = new Date(entry.createdAt);
+
                     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
                     const formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 
                     return (
                       <tbody>
                         <tr>
-                          <td> {entry.username} </td>
-                          <td> {entry.fullname} </td>
-                          <td> {formattedDate} ({formattedTime}) </td>
-                          <td> {entry.assetoptions.MCX_allow ? "YES" : "No"} </td>
-                          <td> {entry.assetoptions.FONSE_allow ? "YES" : "No"} </td>
-                          <td> {entry.assetoptions.brokereage_NFO} </td>
-                          <td> {entry.assetoptions.brokereage_MCX} </td>
-                          <td> {entry.assetoptions.profit_limit} </td>
-                          <td> {entry.assetoptions.margin_limit} </td>
-                            <td onClick={() => handleEdit(entry)}>
-                              <i
-                                className="mdi mdi-pencil-box"
-                                style={{ fontSize: 'large' }}
-                              ></i>
-                            </td>
-                            <td>
-                              <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
-                            </td>
+                          <td>{entry.username}</td>
+                          <td>{entry.fullname}</td>
+                          <td>{formattedDate} ({formattedTime})</td>
+                          <td>{entry.assetoptions.MCX_allow ? "YES" : "No"}</td>
+                          <td>{entry.assetoptions.FONSE_allow ? "YES" : "No"}</td>
+                          <td>{entry.assetoptions.brokereage_NFO}</td>
+                          <td>{entry.assetoptions.brokereage_MCX}</td>
+                          <td>{entry.assetoptions.profit_limit}</td>
+                          <td>{entry.assetoptions.margin_limit}</td>
+                          <td>
+                            <i
+                              className="mdi mdi-pencil-box"
+                              style={{ fontSize: 'large' }}
+                            ></i>
+                          </td>
+                          <td>
+                            <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
+                          </td>
                         </tr>
                       </tbody>
                     )

@@ -11,12 +11,14 @@ import Footer from './shared/Footer';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import { ToastContainer } from 'react-toastify';
+import MSidebar from './shared/MSidebar';
 
 const App = () => {
   const location = useLocation();
   const [isFullPageLayout, setIsFullPageLayout] = useState(false);
   const [isSubadmin, setIsSubadmin] = useState(false);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
+  const [isMaster, setIsMaster] = useState(false);
 
   useEffect(() => {
     onRouteChanged();
@@ -27,7 +29,7 @@ const App = () => {
       '/login',
       '/master_login',
       '/supermaster_login',
-      '/register',
+      '/admin_login',
       '/user-pages/lockscreen',
       '/error-pages/error-404',
       '/error-pages/error-500',
@@ -73,21 +75,52 @@ const App = () => {
       '/supermaster_main/settings',
     ];
 
+    const masterRoutes = [
+      '/admin_login',
+      '/admin_admin/loaded',
+      '/admin_admin/marketwatch',
+      '/admin_admin/orderbook',
+      '/admin_admin/portfolio',
+      '/admin_admin/notifications',
+      '/admin_admin/account',
+      '/admin_admin/transaction',
+      '/admin_admin/backoffice',
+      '/admin_admin/history',
+      '/admin_admin/manage_users',
+      '/admin_admin/manage_masters',
+      '/admin_admin/manage_supermasters',
+      '/admin_admin/add_user',
+      '/admin_admin/add_master',
+      '/admin_admin/add_supermaster',
+      '/admin_admin/invoice',
+      '/admin_admin/summary',
+      '/admin_admin/settings',
+    ];
+
 
     if (fullPageLayoutRoutes.includes(location.pathname)) {
       setIsFullPageLayout(true);
       setIsSubadmin(false);
       setIsSuperadmin(false);
+      setIsMaster(false);
       document.querySelector('.page-body-wrapper').classList.add('full-page-wrapper');
     } else if (subadminRoutes.includes(location.pathname)) {
       setIsFullPageLayout(false);
       setIsSubadmin(true);
       setIsSuperadmin(false);
+      setIsMaster(false);
       document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
     } else if (superadminRoutes.includes(location.pathname)) {
       setIsFullPageLayout(false);
       setIsSubadmin(false);
       setIsSuperadmin(true);
+      setIsMaster(false);
+      document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
+    } else if (masterRoutes.includes(location.pathname)) {
+      setIsFullPageLayout(false);
+      setIsSubadmin(false);
+      setIsSuperadmin(false);
+      setIsMaster(true);
       document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
     } else {
       setIsFullPageLayout(false);
@@ -99,7 +132,7 @@ const App = () => {
 
   let navbarComponent = !isFullPageLayout ? <Navbar /> : null;
   let sidebarComponent = !isFullPageLayout ? (
-    isSubadmin ? <SubadminSidebar /> : isSuperadmin ? <SuperadminSidebar /> : <Sidebar />
+    isSubadmin ? <SubadminSidebar /> : isSuperadmin ? <SuperadminSidebar /> : isMaster ? <MSidebar /> : <Sidebar />
   ) : null;
   let SettingsPanelComponent = !isFullPageLayout ? <SettingsPanel /> : null;
   let footerComponent = !isFullPageLayout ? <Footer /> : null;
