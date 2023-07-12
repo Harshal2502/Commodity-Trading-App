@@ -41,10 +41,10 @@ export const Login = () => {
         dispatch(setAccessrole(res.auth.data.user.role));
       }
 
-
       if (res.result === true) {
         navigate("/loaded");
       }
+
       else {
         toast.error("Invalid credentials", {
           position: toast.POSITION.TOP_RIGHT,
@@ -54,6 +54,7 @@ export const Login = () => {
         });
       }
     }
+
     catch (err) {
       console.log(err);
     }

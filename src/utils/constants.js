@@ -23,10 +23,11 @@ export const API_ROUTES = {
   REMOVE_WATCHLIST: BASEAPI_PATH + "/api/user/removeWatchlist",
   GET_WATCHLIST: BASEAPI_PATH + "/api/user/getWatchlist",
   GETALL_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersAllUsers",
-  GET_ALL_PENDING_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getOrdersPendingAllUsersAdmin", 
+  GET_ALL_PENDING_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersPendingAllUsers", 
   GETALL_PLACED_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersPlacedAllUsers", 
-  GETALL_MARKET_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllMarketOrdersAllUsers", 
-  GETALL_PENDING_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllLimitOrdersAllUsers", 
+  GETALL_EXPIRED_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersExpiredAllUsers", 
+  GETALL_SQRD_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersSquaredoffAllUsers", 
+  GETALL_CANCEL_ORDERS_ADMIN: BASEAPI_PATH + "/api/order/getAllOrdersCancelledAllUsers", 
   GET_ALL_ORDERS_BY_USER: BASEAPI_PATH + "/api/order/getAllOrdersSingleUser",
   GET_PENDING_ORDERS_USER: BASEAPI_PATH + "/api/order/getAllOrdersPendingSingleUser",
   PLACE_ALL_MARKET_ORDERS: BASEAPI_PATH + "/api/trading/placeALLMarketOrders",
@@ -62,5 +63,5 @@ export const API_ROUTES = {
   GET_CALL_PUT: BASEAPI_PATH + "/api/home/getCallPut",
   GET_STRIKE_PRICE: BASEAPI_PATH + "/api/home/getStrikePrice",
   EDIT_USER: BASEAPI_PATH + "/api/user/admin/UpdateAssetOptionsSingleUser",
-  
+
 };

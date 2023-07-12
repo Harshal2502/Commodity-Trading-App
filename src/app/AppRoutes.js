@@ -6,6 +6,7 @@ import { SuperadminAuth } from './shared/SuperadminAuth';
 import SuperTransaction from './super-admin-pages/Transaction';
 import MasterTransaction from './master-pages/Transaction';
 import { MasterAuth } from './shared/MasterAuth';
+import EditUser from './shared/EditUser';
 
 
 
@@ -126,6 +127,7 @@ const AppRoutes = () => {
         <Route path="/master_spa/history" element={<RequireAuth><Historys /></RequireAuth>} />
         <Route path="/master_spa/manage_users" element={<RequireAuth><ManageUsers /></RequireAuth>} />
         <Route path="/master_spa/add_user" element={<RequireAuth><AddUser /></RequireAuth>} />
+        <Route path="/master_spa/edituser" element={<RequireAuth><EditUser /></RequireAuth>} />
         <Route path="/master_spa/invoice" element={<RequireAuth><Invoices /></RequireAuth>} />
         <Route path="/master_spa/summary" element={<RequireAuth><Summarys /></RequireAuth>} />
         <Route path="/master_spa/settings" element={<RequireAuth><Settingss /></RequireAuth>} />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { GET_ADMIN_NOTIF, GET_NOTIFICATIONS } from '../../utils/API';
 import { Trans } from "react-i18next";
 import {
   ADMININFO,
@@ -37,6 +38,11 @@ const Navbar = () => {
   const [PL, setPL] = useState(0);
   const [total, settotal] = useState(0);
   const [balance, setBalance] = useState(0);
+  const [notifics, setNotifics] = useState();
+
+  useEffect(() => {
+    getNotifics();
+  }, [accessrole])
 
   useEffect(() => {
     const socket = new WebSocket("ws://52.66.105.29:8020");
@@ -139,6 +145,22 @@ const Navbar = () => {
     navigate(loc);
   };
 
+
+
+  const getNotifics = async () => {
+
+    if (accessrole === "admin") {
+      const res = await GET_ADMIN_NOTIF(username);
+      const singleArray = [].concat(...res);
+      setNotifics(singleArray.slice(0, 5));
+    }
+
+    else if (accessrole === "user") {
+      const res = await GET_NOTIFICATIONS(username);
+      setNotifics(res.slice(0, 5));
+    }
+  }
+
   return (
     <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <button
@@ -154,7 +176,7 @@ const Navbar = () => {
       >
         <Link
           className="navbar-brand brand-logo"
-          to={accessrole === "admin" ? "/subadmin_spa/loaded" : "/loaded"}
+          to={accessrole === "admin" ? "/master_spa/loaded" : "/loaded"}
           style={{ zIndex: "11122" }}
         >
           <img
@@ -173,7 +195,7 @@ const Navbar = () => {
         </Link>
         <Link
           className="navbar-brand brand-logo-mini"
-          to={accessrole === "admin" ? "/subadmin_spa/loaded" : "/loaded"}
+          to={accessrole === "admin" ? "/master_spa/loaded" : "/loaded"}
         >
           <img
             style={{ height: "auto", width: "20rem" }}
@@ -235,6 +257,10 @@ const Navbar = () => {
                 <i className="mdi mdi-bell-outline"></i>
                 <span className="count-symbol bg-danger"></span>
               </Dropdown.Toggle>
+
+
+
+
               <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
                 <h6 className="p-3 mb-0">
                   <Trans>Notifications</Trans>
@@ -244,30 +270,62 @@ const Navbar = () => {
                   className="dropdown-item preview-item"
                   onClick={(evt) => evt.preventDefault()}
                 >
-                  <div className="preview-thumbnail">
-                    <div className="preview-icon bg-primary">
-                      <i className="mdi mdi-account-circle"></i>
-                    </div>
-                  </div>
+
+
+
                   <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 className="preview-subject font-weight-normal mb-1">
-                      <Trans> [democ] 12-05-2023 (16:02) </Trans>
-                    </h6>
-                    <p className="text-gray ellipsis mb-0">
-                      <Trans>
-                        {" "}
-                        Your (market) buy order for MCX GOLD|05JUN2023 qty 2 at
-                        60615.00 has been Successfully executed on 12-05-2023
-                        (16:02) by SELF
-                      </Trans>
-                    </p>
+
+                    {notifics?.length > 0 ? notifics.map((entry, index) => {
+
+                      const dateObj3 = new Date(entry.createdAt);
+                      const day3 = dateObj3.getDate();
+                      const month3 = dateObj3.toLocaleString('default', { month: 'short' }).toUpperCase();
+                      const year3 = dateObj3.getFullYear();
+                      const time3 = dateObj3.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+                      const formattedDate3 = `${day3}${month3}${year3} (${time3})`;
+
+                      return (
+                        <div style={{ marginBottom: "10px", marginTop: "10px", display: "flex" }}>
+                          <div style={{ marginRight: "10px" }} className="preview-thumbnail">
+                            <div className="preview-icon bg-primary">
+                              <i className="mdi mdi-account-circle"></i>
+                            </div>
+                          </div>
+                          <div>
+                            <h6 className="preview-subject font-weight-normal mb-1">
+                              <div> [ {entry.username} ] {formattedDate3} </div>
+                            </h6>
+                            <p className="text-gray ellipsis mb-0">
+                              <div>
+                                {entry.notificationText}
+                              </div>
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }) :
+                      <div role="alert" class="fade alert alert-primary show">
+                        Nothing to see here yet!
+                      </div>
+                    }
+
                   </div>
+
+
                 </Dropdown.Item>
                 <div className="dropdown-divider"></div>
-                <h6 className="p-3 mb-0 text-center cursor-pointer">
+                <h6 onClick={() => {
+                  if (accessrole === "admin")
+                    navigate("/master_spa/notifications");
+                  else navigate("/notifications");
+                }} className="p-3 mb-0 text-center cursor-pointer">
                   <Trans>See All Notifications</Trans>
                 </h6>
               </Dropdown.Menu>
+
+
+
+
             </Dropdown>
           </li>
           <li className="nav-item nav-profile">
@@ -352,7 +410,7 @@ const Navbar = () => {
                     onClick={(evt) => {
                       evt.preventDefault();
                       if (accessrole === "admin")
-                        navigate("/subadmin_spa/settings");
+                        navigate("/master_spa/settings");
                       else navigate("/settings");
                     }}
                   >

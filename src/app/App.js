@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 import { ToastContainer } from 'react-toastify';
 import MSidebar from './shared/MSidebar';
+import './user-pages/SQTable.css'
 
 const App = () => {
   const location = useLocation();
@@ -49,6 +50,7 @@ const App = () => {
       '/master_spa/history',
       '/master_spa/manage_users',
       '/master_spa/add_user',
+      '/master_spa/edituser',
       '/master_spa/invoice',
       '/master_spa/summary',
       '/master_spa/settings',
@@ -90,6 +92,7 @@ const App = () => {
       '/admin_admin/manage_masters',
       '/admin_admin/manage_supermasters',
       '/admin_admin/add_user',
+      '/admin_admin/edituser',
       '/admin_admin/add_master',
       '/admin_admin/add_supermaster',
       '/admin_admin/invoice',
@@ -126,6 +129,7 @@ const App = () => {
       setIsFullPageLayout(false);
       setIsSubadmin(false);
       setIsSuperadmin(false);
+      setIsMaster(false);
       document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
     }
   };

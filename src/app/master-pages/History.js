@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GETALL_LIMIT_ORDERS_ADMIN, GETALL_MARKET_ORDERS_ADMIN, GETALL_ORDERS_ADMIN, GETALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN } from '../../utils/API';
+import { GETALL_ORDERS_ADMIN, GET_ALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN } from '../../utils/API';
 import { useSelector } from 'react-redux';
 
 export const Historys = () => {
@@ -22,7 +22,7 @@ export const Historys = () => {
   const applySort = async () => {
 
     if (sort === "pending") {
-      const res = await GETALL_PENDING_ORDERS_ADMIN(username);
+      const res = await GET_ALL_PENDING_ORDERS_ADMIN(username);
       const singleArray = [].concat(...res.pendingOrders);
       setOrderArray(singleArray);
     }
@@ -36,16 +36,16 @@ export const Historys = () => {
       const singleArray = [].concat(...res.pendingOrders);
       setOrderArray(singleArray);
     }
-    else if (sort === "market") {
-      const res = await GETALL_MARKET_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res.pendingOrders);
-      setOrderArray(singleArray);
-    }
-    else if (sort === "limit") {
-      const res = await GETALL_LIMIT_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res.pendingOrders);
-      setOrderArray(singleArray);
-    }
+    // else if (sort === "market") {
+    //   const res = await GETALL_MARKET_ORDERS_ADMIN(username);
+    //   const singleArray = [].concat(...res.pendingOrders);
+    //   setOrderArray(singleArray);
+    // }
+    // else if (sort === "limit") {
+    //   const res = await GETALL_LIMIT_ORDERS_ADMIN(username);
+    //   const singleArray = [].concat(...res.pendingOrders);
+    //   setOrderArray(singleArray);
+    // }
 
   }
 

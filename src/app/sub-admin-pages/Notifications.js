@@ -55,7 +55,7 @@ export const Notificationss = () => {
                   'alert-danger',
                   'alert-warning',
                   'alert-info',
-                  'alert-dark'
+                  {/* 'alert-dark' */}
                 ];
 
                 const className = classNames[index % classNames.length];

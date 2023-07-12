@@ -54,7 +54,6 @@ export const Notifications = () => {
                   'alert-danger',
                   'alert-warning',
                   'alert-info',
-                  'alert-dark'
                 ];
 
                 const className = classNames[index % classNames.length];
@@ -68,8 +67,10 @@ export const Notifications = () => {
 
                 return (
                   <div role="alert" className={`fade alert ${className} show`}>
-                    <h6><i className="mdi mdi-account"></i>[{entry.username}] {formattedDate3} </h6>
+                    <h6 style={{color: "white"}}><i className="mdi mdi-account"></i>[ {entry.username} ] {formattedDate3} </h6>
+                    <span style={{color: "white"}}>  
                     {entry.notificationText}
+                    </span>
                   </div>
                 );
               }) :

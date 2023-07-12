@@ -405,7 +405,7 @@ export const GET_PENDING_ORDERS_USER = async (username) => {
 
 }
 
-export const GETALL_PENDING_ORDERS_ADMIN = async (username) => {
+export const GETALL_SQRD_ORDERS_ADMIN = async (username) => {
 
   const options = {
     params: {
@@ -414,7 +414,25 @@ export const GETALL_PENDING_ORDERS_ADMIN = async (username) => {
   };
 
   try {
-    const res = await axios.get(API_ROUTES.GET_ALL_PENDING_ORDERS_ADMIN, options);
+    const res = await axios.get(API_ROUTES.GETALL_SQRD_ORDERS_ADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const GETALL_CANCEL_ORDERS_ADMIN = async (username) => {
+
+  const options = {
+    params: {
+      username: username
+    }
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.GETALL_CANCEL_ORDERS_ADMIN, options);
     return res.data;
   }
   catch (error) {
@@ -430,6 +448,8 @@ export const GETALL_ORDERS_ADMIN = async (username) => {
       username: username
     }
   };
+
+  console.log(options)
 
   try {
     const res = await axios.get(API_ROUTES.GETALL_ORDERS_ADMIN, options);
@@ -459,7 +479,7 @@ export const GETALL_PLACED_ORDERS_ADMIN = async (username) => {
 
 }
 
-export const GETALL_MARKET_ORDERS_ADMIN = async (username) => {
+export const GETALL_EXPIRED_ORDERS_ADMIN = async (username) => {
 
   const options = {
     params: {
@@ -468,7 +488,7 @@ export const GETALL_MARKET_ORDERS_ADMIN = async (username) => {
   };
 
   try {
-    const res = await axios.get(API_ROUTES.GETALL_MARKET_ORDERS_ADMIN, options);
+    const res = await axios.get(API_ROUTES.GETALL_EXPIRED_ORDERS_ADMIN, options);
     return res.data;
   }
   catch (error) {
@@ -477,7 +497,7 @@ export const GETALL_MARKET_ORDERS_ADMIN = async (username) => {
 
 }
 
-export const GETALL_LIMIT_ORDERS_ADMIN = async (username) => {
+export const GET_ALL_PENDING_ORDERS_ADMIN = async (username) => {
 
   const options = {
     params: {
@@ -486,7 +506,7 @@ export const GETALL_LIMIT_ORDERS_ADMIN = async (username) => {
   };
 
   try {
-    const res = await axios.get(API_ROUTES.GETALL_LIMIT_ORDERS_ADMIN, options);
+    const res = await axios.get(API_ROUTES.GET_ALL_PENDING_ORDERS_ADMIN, options);
     return res.data;
   }
   catch (error) {
