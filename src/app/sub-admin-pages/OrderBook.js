@@ -18,49 +18,24 @@ export function OrderBook() {
 
   const [sort, setSort] = useState();
   const [orderArray, setOrderArray] = useState([]);
+  const [sortArray, setSortArray] = useState([]);
 
   useEffect(() => {
     const fun = async () => {
       const res = await GETALL_ORDERS_ADMIN(username);
       const singleArray = [].concat(...res);
       setOrderArray(singleArray);
+      setSortArray(singleArray);
     }
     fun();
   }, [username])
 
   const applySort = async () => {
-
-    if (sort === "pending") {
-      const res = await GET_ALL_PENDING_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
+    if (sort === "all") {
+      setSortArray(orderArray);
+      return;
     }
-    else if (sort === "all") {
-      const res = await GETALL_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
-    }
-    else if (sort === "excuted") {
-      const res = await GETALL_PLACED_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
-    }
-    else if (sort === "placed") {
-      const res = await GETALL_SQRD_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
-    }
-    else if (sort === "cancelled") {
-      const res = await GETALL_CANCEL_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
-    }
-    else if (sort === "expired") {
-      const res = await GETALL_EXPIRED_ORDERS_ADMIN(username);
-      const singleArray = [].concat(...res);
-      setOrderArray(singleArray);
-    }
-
+    setSortArray(orderArray.filter((order) => order.order_status === sort));
   }
 
 
@@ -83,12 +58,12 @@ export function OrderBook() {
 
               <select onChange={(e) => setSort(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
 
-                <option value="all" selected>Order Status (All)</option>
-                <option value="pending">Pending</option>
-                <option value="excuted">Excuted</option>
-                <option value="placed">Placed</option>
-                <option value="market">Cancelled</option>
-                <option value="limit">Expired</option>
+                <option value="all" selected>All Orders</option>
+                <option value="Pending">Pending</option>
+                <option value="Squaredoff">Executed</option>
+                <option value="Placed">Placed</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Expired">Expired</option>
               </select>
               <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">Show</button>
             </form>
@@ -101,7 +76,7 @@ export function OrderBook() {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">OrderBook ({orderArray?.length})</h4>
+              <h4 className="card-title">OrderBook ({sortArray?.length})</h4>
               <div className="table-responsive">
                 <table className="table table-striped">
                   <thead>
@@ -122,7 +97,7 @@ export function OrderBook() {
                     </tr>
                   </thead>
 
-                  {orderArray?.map((entry) => {
+                  {sortArray?.map((entry) => {
 
                     if (entry === null) return;
 

@@ -1131,3 +1131,21 @@ export const EDIT_USER = async (admin, user, formData) => {
   }
 
 }
+
+export const FETCH_BACKOFFICE_SUBADMIN = async (username) => {
+
+  const options = {
+    params: {
+      username: username,
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_BACKOFFICE_SUBADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}

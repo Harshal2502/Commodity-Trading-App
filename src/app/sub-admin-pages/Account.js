@@ -6,9 +6,9 @@ export function Accounts() {
 
   const { username } = useSelector((state) => {
     if (!state) {
-      return { 
+      return {
         username: null
-       };
+      };
     }
     return {
       username: state.username
@@ -18,11 +18,13 @@ export function Accounts() {
   const [userInfo, setUserInfo] = useState();
   const [clientArray, setClientArray] = useState();
   const [clientItem, setclientItem] = useState();
-  const [accountContent, setAccountContent] = useState();
+  const [orderArray, setOrderArray] = useState([]);
+  const [sortArray, setSortArray] = useState([]);
 
   useEffect(() => {
     getUserInfo();
     getAccountContent();
+    fetchUsers();
   }, []);
 
   const getUserInfo = async () => {
@@ -32,13 +34,9 @@ export function Accounts() {
 
   const getAccountContent = async () => {
     const res = await GET_ACCOUNT_CONTENT(username);
-    console.log(res)
-    setAccountContent(res);
+    setOrderArray(res.reverse());
+    setSortArray(res);
   }
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const fetchUsers = async () => {
     const res = await ADMIN_USERS(username);
@@ -47,6 +45,18 @@ export function Accounts() {
 
   const handleClientChange = (e) => {
     setclientItem(e.target.value);
+  }
+
+  const handleClick = (e) => {
+
+    e.preventDefault();
+
+    if (clientItem === "all") {
+      setSortArray(orderArray);
+      return;
+    }
+
+    setSortArray(orderArray.filter((order) => order?.payment_events?.payeename.toLowerCase() === clientItem.toLowerCase()));
   }
 
   return (
@@ -67,15 +77,17 @@ export function Accounts() {
             <form className="form-inline">
 
               <select class="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" onChange={handleClientChange} id="subadmin_place_order_usercode"  >
-                <option value="all" selected disabled>Clients (All)</option>
+                <option value="all" selected>Clients (All)</option>
+
                 {clientArray?.map((entry) => {
 
                   return (
                     <option value={entry.username}>{entry.username}</option>
                   )
                 })}
+
               </select>
-              <button type="submit" className="btn btn-gradient-primary mb-2">Show</button>
+              <button type="submit" onClick={handleClick} className="btn btn-gradient-primary mb-2">Show</button>
             </form>
           </div>
         </div>
@@ -85,7 +97,7 @@ export function Accounts() {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Account (0)</h4>
+              <h4 className="card-title"> Account ({sortArray?.length})</h4>
 
               <div className="table-responsive">
                 <table className="table table-striped">
@@ -100,7 +112,7 @@ export function Accounts() {
                     </tr>
                   </thead>
                   <tbody>
-                    {accountContent ? accountContent.map((entry) => {
+                    {sortArray ? sortArray.map((entry) => {
 
                       const dateObj = new Date(entry.createdAt);
 

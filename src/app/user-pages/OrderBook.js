@@ -18,49 +18,26 @@ export const OrderBook = () => {
 
   const [orderArray, setOrderArray] = useState([]);
   const [sort, setSort] = useState();
-  // const [totalPendingOrders, setTotalPendingOrders] = useState();
-  const [loader, setLoader] = useState(false);
+  const [sortArray, setSortArray] = useState([]);
 
   useEffect(() => {
     fetchPendingOrdersMarket();
     fetchPendingOrdersLimit();
 
     // setInterval(() => {
-      fetchAllOrders();
+    fetchAllOrders();
     // }, 10000);
 
   }, []);
 
   const fetchAllOrders = async () => {
     const res = await GET_ALL_ORDERS_BY_USER(username);
-    console.log("array", res);
     setOrderArray(res.Orders);
-  }
-
-  const fetchPlacedOrders = async () => {
-    const res = await GETALL_PLACED_ORDER_USER(username);
-    setOrderArray(res);
-  }
-  const fetchExpiredOrders = async () => {
-    const res = await GETALL_EXPIRED_ORDER_USER(username);
-    setOrderArray(res);
-  }
-  const fetchCanceledOrders = async () => {
-    const res = await GETALL_CANCELED_ORDER_USER(username);
-    setOrderArray(res);
-  }
-  const fetchPendingOrders = async () => {
-    const res = await GET_PENDING_ORDERS_USER(username);
-    setOrderArray(res.data);
-  }
-  const fetchSqrOrders = async () => {
-    const res = await GETALL_SQRORDER_USER(username);
-    setOrderArray(res);
+    setSortArray(res.Orders);
   }
 
   const fetchPendingOrdersLimit = async () => {
     const res = await GETALL_PENDING_LIMITORDERS_USER(username);
-    // console.log(res)
 
     if (res.status == 200 && res.data.length !== 0) {
       const result = await PLACE_ALL_LIMIT_ORDERS(username, res.data);
@@ -70,9 +47,6 @@ export const OrderBook = () => {
 
   const fetchPendingOrdersMarket = async () => {
     const res = await GETALL_PENDING_MARKETORDERS_USER(username);
-    console.log(res);
-
-    // Run for loop for each order present got from res & using exchange identifier and expiry update real time buy and sell proce
 
     if (res.status == 200 && res.data.length !== 0) {
       const result = await PLACE_ALL_MARKET_ORDERS(username, res.data);
@@ -81,35 +55,19 @@ export const OrderBook = () => {
   }
 
   // useEffect(() => {
-    // fetchPendingOrders();
+  // fetchPendingOrders();
   // }, [totalPendingOrders]);
 
   const handleClick = (e) => {
 
     e.preventDefault();
-    setLoader(true);
 
-    if (sort === "pending") {
-      fetchPendingOrders();
-    }
-    else if (sort === "order") {
-      fetchAllOrders();
-    }
-    else if (sort === "excuted") {
-      fetchSqrOrders();
-    }
-    else if (sort === "placed") {
-      fetchPlacedOrders();
-    }
-    else if (sort === "expired") {
-      fetchExpiredOrders();
-    }
-    else if (sort === "cancelled") {
-      fetchCanceledOrders();
+    if (sort === "all") {
+      setSortArray(orderArray);
+      return;
     }
 
-    setLoader(false);
-
+    setSortArray(orderArray.filter((order) => order.order_status === sort));
   }
 
 
@@ -120,8 +78,8 @@ export const OrderBook = () => {
         <h3 className="page-title"> OrderBook </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
-            <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>OrderBook</a></li>
-            <li className="breadcrumb-item active" aria-current="page">Your Orders</li>
+            <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}> OrderBook </a></li>
+            <li className="breadcrumb-item active" aria-current="page"> Your Orders </li>
           </ol>
         </nav>
       </div>
@@ -132,15 +90,14 @@ export const OrderBook = () => {
             <form className="form-inline">
 
               <select onChange={(e) => setSort(e.target.value)} style={{ width: "80%" }} class="form-control mb-2 mr-sm-2" >
-                <option selected disabled>Please Select</option>
-                <option value="order">Order Status (All)</option>
-                <option value="pending">Pending</option>
-                <option value="excuted">Executed</option>
-                <option value="placed">Placed</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="expired">Expired</option>
+                <option selected value="all"> All Orders </option>
+                <option value="Pending"> Pending </option>
+                <option value="Squaredoff"> Executed </option>
+                <option value="Placed"> Placed </option>
+                <option value="Cancelled"> Cancelled </option>
+                <option value="Expired"> Expired </option>
               </select>
-              <button onClick={handleClick} className="btn btn-gradient-primary mb-2">Show</button>
+              <button onClick={handleClick} className="btn btn-gradient-primary mb-2"> Show </button>
             </form>
           </div>
         </div>
@@ -151,8 +108,7 @@ export const OrderBook = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">OrderBook ({orderArray?.length})</h4>
-              {loader ? <div style={{ textAlign: "center", margin: "1.5rem" }}><span className="loader"></span></div> : ""}
+              <h4 className="card-title"> OrderBook ({sortArray?.length}) </h4>
               <div className="table-responsive">
                 <table className="table table-striped">
                   <thead>
@@ -176,7 +132,7 @@ export const OrderBook = () => {
                     </tr>
                   </thead>
 
-                  {orderArray?.map((entry) => {
+                  {sortArray?.map((entry) => {
 
                     {/* if (!entry.quantity) {
                       return null;

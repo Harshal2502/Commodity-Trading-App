@@ -63,5 +63,6 @@ export const API_ROUTES = {
   GET_CALL_PUT: BASEAPI_PATH + "/api/home/getCallPut",
   GET_STRIKE_PRICE: BASEAPI_PATH + "/api/home/getStrikePrice",
   EDIT_USER: BASEAPI_PATH + "/api/user/admin/UpdateAssetOptionsSingleUser",
-
+  FETCH_BACKOFFICE_SUBADMIN: BASEAPI_PATH + "/api/events/getAllPaymentEventsAdmin",
+  
 };
