@@ -140,6 +140,12 @@ const MSidebar = () => {
                         <i className=" mdi mdi-account-card-details menu-icon"></i>
                     </Link>
                 </li>
+                <li className={isPathActive('/admin_admin/manageorders') ? 'nav-item active' : 'nav-item'}>
+                    <Link className="nav-link" to="/admin_admin/manageorders">
+                        <span className="menu-title"><Trans>Manage Orders</Trans></span>
+                        <i className=" mdi mdi-account-multiple menu-icon"></i>
+                    </Link>
+                </li>
                 <li className={isPathActive('/admin_admin/account') ? 'nav-item active' : 'nav-item'}>
                     <Link className="nav-link" to="/admin_admin/account">
                         <span className="menu-title"><Trans>Account</Trans></span>

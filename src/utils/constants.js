@@ -64,5 +64,7 @@ export const API_ROUTES = {
   GET_STRIKE_PRICE: BASEAPI_PATH + "/api/home/getStrikePrice",
   EDIT_USER: BASEAPI_PATH + "/api/user/admin/UpdateAssetOptionsSingleUser",
   FETCH_BACKOFFICE_SUBADMIN: BASEAPI_PATH + "/api/events/getAllPaymentEventsAdmin",
+  DELETEORDER: BASEAPI_PATH + "/api/order/deleteOrder",
+  FETCH_ALL_ORDERS: BASEAPI_PATH + "/api/order/getAllOrdersAllUsers",
   
 };

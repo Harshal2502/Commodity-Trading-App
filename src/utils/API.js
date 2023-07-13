@@ -1149,3 +1149,40 @@ export const FETCH_BACKOFFICE_SUBADMIN = async (username) => {
   }
 
 }
+
+export const FETCH_ALL_ORDERS = async (username) => {
+
+  const options = {
+    params: {
+      username: username,
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_ALL_ORDERS, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const DELETEORDER = async (username, id) => {
+
+  const options = {
+    params: {
+      username_user: username,
+      order_id: id,
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.DELETEORDER, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}

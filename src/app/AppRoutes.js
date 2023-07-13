@@ -56,6 +56,7 @@ const SuperAddAdmin = lazy(() => import('./super-admin-pages/AddAdmin'));
 const SuperInvoice = lazy(() => import('./super-admin-pages/Invoice'));
 const SuperSummary = lazy(() => import('./super-admin-pages/Summary'));
 const SuperSettings = lazy(() => import('./super-admin-pages/Settings'));
+const SuperOrderdetails = lazy(() => import('./super-admin-pages/OrderDetails'));
 
 
 
@@ -75,6 +76,7 @@ const MasterInvoice = lazy(() => import('./master-pages/Invoice'));
 const MasterSummary = lazy(() => import('./master-pages/Summary'));
 const MasterSettings = lazy(() => import('./master-pages/Settings'));
 const ManageSuperadmin = lazy(() => import('./master-pages/ManageSuperadmin'))
+const MasterOrderdetails = lazy(() => import('./master-pages/OrderDetails'));
 
 
 
@@ -147,6 +149,7 @@ const AppRoutes = () => {
         <Route path="/supermaster_main/account" element={<SuperadminAuth><SuperAccount /></SuperadminAuth>} />
         <Route path="/supermaster_main/backoffice" element={<SuperadminAuth><SuperBackoffice /></SuperadminAuth>} />
         <Route path="/supermaster_main/history" element={<SuperadminAuth><SuperHistory /></SuperadminAuth>} />
+        <Route path="/supermaster_main/manageorders" element={<SuperadminAuth><SuperOrderdetails /></SuperadminAuth>} />
         <Route path="/supermaster_main/manage_users" element={<SuperadminAuth><SuperManageUsers /></SuperadminAuth>} />
         <Route path="/supermaster_main/add_user" element={<SuperadminAuth><SuperAddUser /></SuperadminAuth>} />
         <Route path="/supermaster_main/manage_admin" element={<SuperadminAuth><SuperManageAdmin /></SuperadminAuth>} />
@@ -172,6 +175,7 @@ const AppRoutes = () => {
         <Route path="/admin_admin/backoffice" element={<MasterAuth><MasterBackoffice /></MasterAuth>} />
         <Route path="/admin_admin/history" element={<MasterAuth><MasterHistory /></MasterAuth>} />
         <Route path="/admin_admin/manage_users" element={<MasterAuth><MasterManageUsers /></MasterAuth>} />
+        <Route path="/admin_admin/manageorders" element={<MasterAuth><MasterOrderdetails /></MasterAuth>} />
         <Route path="/admin_admin/manage_masters" element={<MasterAuth><MasterManageAdmin /></MasterAuth>} />
         <Route path="/admin_admin/manage_supermasters" element={<MasterAuth><ManageSuperadmin /></MasterAuth>} />
         <Route path="/admin_admin/add_user" element={<MasterAuth><MasterAddUser /></MasterAuth>} />

@@ -49,7 +49,6 @@ export const PortFolio = () => {
     socket.onmessage = async (event) => {
       const data = event.data;
       const parsedArray = parseData(data);
-      console.log(parsedArray);
       setPortfolio(parsedArray[0]?.portfolio);
       setTotal(parsedArray[0]?.forwardWeekPL);
     };
@@ -80,15 +79,17 @@ export const PortFolio = () => {
   }
 
   const handleClick = async (e) => {
-    e.preventDefault();
 
-    const res = await SQUARE_OFF_FUNCTION(username, e.target.value);
-    toast.info(res.message, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 3000,
-      hideProgressBar: false,
-      pauseOnHover: true,
-    });
+    e.preventDefault();
+    console.log(e.target.value)
+
+    // const res = await SQUARE_OFF_FUNCTION(username, e.target.value);
+    // toast.info(res.message, {
+    //   position: toast.POSITION.TOP_RIGHT,
+    //   autoClose: 3000,
+    //   hideProgressBar: false,
+    //   pauseOnHover: true,
+    // });
 
     fetchPlacedOrders();
   }

@@ -74,6 +74,7 @@ const App = () => {
       '/supermaster_main/add_admin',
       '/supermaster_main/invoice',
       '/supermaster_main/summary',
+      '/supermaster_main/manageorders',
       '/supermaster_main/settings',
     ];
 
@@ -97,6 +98,7 @@ const App = () => {
       '/admin_admin/add_supermaster',
       '/admin_admin/invoice',
       '/admin_admin/summary',
+      '/admin_admin/manageorders',
       '/admin_admin/settings',
     ];
 
