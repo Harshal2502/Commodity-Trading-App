@@ -5,20 +5,29 @@ export const API_ROUTES = {
   AUTHUSER: BASEAPI_PATH + "/api/user/auth/User",
   USER_REFRESH: BASEAPI_PATH + "/api/user/auth/UserRefresh",
   CREATE_ADMIN: BASEAPI_PATH + "/api/user/superadmin/AddAdmin",
-  CREATE_SUPERADMIN: BASEAPI_PATH + "/api/user/AddSuperAdmin",
   LOGOUT: BASEAPI_PATH + "/api/user/UserLogout",
   ADDUSER: BASEAPI_PATH + "/api/user/admin/AddUser",
   ADDADMIN: BASEAPI_PATH + "/api/user/superadmin/AddAdmin",
+  ADDSUPERADMIN: BASEAPI_PATH + "/api/user/AddSuperAdmin",//*ADD_SUPERADMIN
+  ADDSUPERMASTER: BASEAPI_PATH + "/api/user/AddSuperMaster",//*ADD_SUPERMASTER
   USERINFO: BASEAPI_PATH + "/api/user/UserInfo",
   ADMININFO: BASEAPI_PATH + "/api/user/admin/AdminInfo",
+  SUPERADMININFO: BASEAPI_PATH + "/api/user/admin/SuperAdminInfo", //*SUPERADMININFO
+  SUPERMASTERINFO: BASEAPI_PATH + "/api/user/admin/SuperMasterInfo", //*SUPERMASTERINFO
   ADMIN_USERS: BASEAPI_PATH + "/api/user/admin/GetAllusers",
   SUPERADMIN_ADMINS: BASEAPI_PATH + "/api/user/superadmin/GetAlladmins",
+  SUPERMASTER_SUPERADMINS: BASEAPI_PATH + "/api/user/supermaster/GetAllSuperadmins",//*SUPERMASTER_SUPERADMINS
   DELETE_USER: BASEAPI_PATH + "/api/user/admin/DeleteUser",
   DELETE_ADMIN: BASEAPI_PATH + "/api/user/superadmin/DeleteAdmin",
+  DELETE_SUPERADMIN: BASEAPI_PATH + "/api/user/supermaster/DeleteSuperAdmin",//*DELETE_SUPERADMIN
   MARKET_ORDER: BASEAPI_PATH + "/api/order/createMarketOrder",
   LIMIT_ORDER: BASEAPI_PATH + "/api/order/createLimitOrder",
-  UPDATE_PASSWORD: BASEAPI_PATH + "/api/user/admin/UpdateUserInfo", 
-  UPDATE_BRKG: BASEAPI_PATH + "/api/user/admin/UpdateBrokerageSingleUser", 
+  UPDATE_PASSWORD: BASEAPI_PATH + "/api/user/admin/UpdateUserInfo",
+  UPDATE_PASSWORD_ADMIN: BASEAPI_PATH + "/api/user/admin/UpdateAdminInfo",//*UPDATE_PASSWORD_ADMIN
+  UPDATE_PASSWORD_SUPERADMIN: BASEAPI_PATH + "/api/user/superadmin/UpdateSuperAdminInfo",//*UPDATE_PASSWORD_SUPERADMIN
+  UPDATE_PASSWORD_SUPERMASTER: BASEAPI_PATH + "/api/user/supermaster/UpdateSuperMasterInfo", //*UPDATE_PASSWORD_SUPERMASTER
+  UPDATE_BRKG: BASEAPI_PATH + "/api/user/admin/UpdateBrokerageSingleUser",//*UPDATE_BRKG
+  UPDATE_BRKG_ALLUSERS: BASEAPI_PATH + "/api/user/admin/UpdateBrokerageAllUsers",//*UPDATE_BRKG_ALLUSERS 
   SET_WATCHLIST: BASEAPI_PATH + "/api/user/addWatchList",
   REMOVE_WATCHLIST: BASEAPI_PATH + "/api/user/removeWatchlist",
   GET_WATCHLIST: BASEAPI_PATH + "/api/user/getWatchlist",
@@ -45,26 +54,43 @@ export const API_ROUTES = {
   GET_NOTIFICATIONS: BASEAPI_PATH + "/api/events/getAllOrderEventsUser",
   GET_ADMIN_NOTIF: BASEAPI_PATH + "/api/events/getOrderEventsAllUsers",
   GET_ACCOUNT_CONTENT: BASEAPI_PATH + "/api/events/getAllPaymentEventsUser",
+  GET_ACCOUNT_CONTENT_ADMIN: BASEAPI_PATH + "/api/events/getAllPaymentEventsAdmin",//*GET_ACCOUNT_CONTENT_ADMIN
+  GET_ACCOUNT_CONTENT_SUPERADMIN: BASEAPI_PATH + "/api/events/getAllPaymentEventsSuperAdmin",//*GET_ACCOUNT_CONTENT_SUPERADMIN
+  GET_ACCOUNT_CONTENT_SUPERMASTER: BASEAPI_PATH + "/api/events/getAllPaymentEventsSuperMaster",//*GET_ACCOUNT_CONTENT_SUPERMASTER
   CREDIT_CASHBALANCE_USER: BASEAPI_PATH + "/api/payment/creditCashBalanceUser",
   CREDIT_VIRTUALBALANCE_USER: BASEAPI_PATH + "/api/payment/creditVirtualBalanceUser",
-  CREDIT_CASHBALANCE_ADMIN: BASEAPI_PATH + "/api/payment/creditCashBalanceAdmin",
+  CREDIT_CASHBALANCE_ADMIN: BASEAPI_PATH + "/api/payment/creditCashBalanceAdmin",//*CREDIT_CASHBALANCE_ADMIN
+  CREDIT_VIRTUALBALANCE_ADMIN: BASEAPI_PATH + "/api/payment/creditVirtualBalanceAdmin",//*CREDIT_VIRTUALBALANCE_ADMIN
+  CREDIT_CASHBALANCE_SUPERADMIN: BASEAPI_PATH + "/api/payment/creditCashBalanceSuperAdmin",//*CREDIT_CASHBALANCE_SUPERADMIN
+  CREDIT_VIRTUALBALANCE_SUPERADMIN: BASEAPI_PATH + "/api/payment/creditVirtualBalanceSuperAdmin",//*CREDIT_VIRTUALBALANCE_SUPERADMIN
+  CREDIT_BALANCE_SUPERMASTER: BASEAPI_PATH + "/api/payment/creditBalanceSuperMaster",//*CREDIT_BALANCE_SUPERMASTER
   DEBIT_CASHBALANC_USER: BASEAPI_PATH + "/api/payment/debitCashBalanceUser",
   DEBIT_VIRTUALBALANC_USER: BASEAPI_PATH + "/api/payment/debitVirtualBalanceUser",
-  DEBIT_CASHBALANC_ADMIN: BASEAPI_PATH + "/api/payment/debitCashBalanceAdmin",
+  DEBIT_CASHBALANC_ADMIN: BASEAPI_PATH + "/api/payment/debitCashBalanceAdmin",//*DEBIT_CASHBALANC_ADMIN
+  DEBIT_VIRTUALBALANC_ADMIN: BASEAPI_PATH + "/api/payment/debitVirtualBalanceAdmin",//*DEBIT_VIRTUALBALANC_ADMIN
+  DEBIT_CASHBALANC_SUPERADMIN: BASEAPI_PATH + "/api/payment/debitCashBalanceSuperAdmin",//*DEBIT_CASHBALANC_SUPERADMIN
+  DEBIT_VIRTUALBALANC_SUPERADMIN: BASEAPI_PATH + "/api/payment/debitVirtualBalanceSuperAdmin",//*DEBIT_VIRTUALBALANC_SUPERADMIN
   GET_MARGIN_BY_USER: BASEAPI_PATH + "/api/user/getMarginBalanceSingleUser",
   GET_EXCHANGES: BASEAPI_PATH + "/api/home/getExchanges",
   GET_INSTRUMENTS: BASEAPI_PATH + "/api/home/getInstruments", 
   GET_PRODUCTS: BASEAPI_PATH + "/api/home/getProducts", 
   GET_EXPIRY: BASEAPI_PATH + "/api/home/getExpiry", 
   WEEKLY_PL_USER: BASEAPI_PATH + "/api/portfolio/getWeeklyPLSingleUser",
-  FETCH_INVOICE: BASEAPI_PATH + "",
   GET_PORTFOLIO_ADMIN_SINGLEUSER: BASEAPI_PATH + "/api/portfolio/getPortfolioSingleUser",
   GET_PORTFOLIO_ALLUSERS: BASEAPI_PATH + "/api/portfolio/getPortfolioAllUsers",
   GET_CALL_PUT: BASEAPI_PATH + "/api/home/getCallPut",
   GET_STRIKE_PRICE: BASEAPI_PATH + "/api/home/getStrikePrice",
   EDIT_USER: BASEAPI_PATH + "/api/user/admin/UpdateAssetOptionsSingleUser",
-  FETCH_BACKOFFICE_SUBADMIN: BASEAPI_PATH + "/api/events/getAllPaymentEventsAdmin",
+  EDIT_ADMIN: BASEAPI_PATH + "/api/user/superadmin/UpdateAdminInfoSuperAdmin",//*EDIT_ADMIN
+  EDIT_SUPERADMIN: BASEAPI_PATH + "/api/user/supermaster/UpdateSuperAdminInfoSuperMaster",//*EDIT_SUPERADMIN
+  FETCH_BACKOFFICE_SUBADMIN: BASEAPI_PATH + "/api/events/getPaymentEventsAllUsers",
+  FETCH_BACKOFFICE_SUPERADMIN: BASEAPI_PATH + "/api/events/getPaymentEventsAllAdmin",//*FETCH_BACKOFFICE_SUPERADMIN
+  FETCH_BACKOFFICE_SUPERMASTER: BASEAPI_PATH + "/api/events/getPaymentEventsAllSuperAdmin",//*FETCH_BACKOFFICE_SUPERMASTER
   DELETEORDER: BASEAPI_PATH + "/api/order/deleteOrder",
   FETCH_ALL_ORDERS: BASEAPI_PATH + "/api/order/getAllOrdersAllUsers",
-  
+  FETCH_INVOICE: BASEAPI_PATH + "/api/payment/getSingleInvoiceSingleUser",//*FETCH_INVOICE
+  FETCH_INVOICE_USER: BASEAPI_PATH + "/api/payment/getAllInvoicesSingleUser",//*FETCH_INVOICE_USER
+  FETCH_INVOICE_ADMIN: BASEAPI_PATH + "/api/payment/getAllInvoicesAllUsersAdmin",//*FETCH_INVOICE_ADMIN
+  FETCH_INVOICE_SUPERADMIN: BASEAPI_PATH + "/api/payment/getAllInvoicesAllUsersSuperAdmin",//*FETCH_INVOICE_SUPERADMIN
+  FETCH_INVOICE_SUPERMASTER: BASEAPI_PATH + "/api/payment/getAllInvoicesAllUsersSuperMaster",//*FETCH_INVOICE_SUPERMASTER
 };

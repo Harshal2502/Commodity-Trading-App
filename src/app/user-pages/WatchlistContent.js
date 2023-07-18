@@ -87,16 +87,16 @@ const WatchlistContent = ({ colorClass, colorClass1, colorClass2, entry, index, 
             (entry.Exchange === "MCX" && isWithinMCXTradingHours)
         );
 
-        // if (!isAllowedToPurchase) {
-        //     // Display an error message or take appropriate action
-        //     toast.error("The market is currently closed", {
-        //         position: toast.POSITION.TOP_RIGHT,
-        //         autoClose: 3000,
-        //         hideProgressBar: false,
-        //         pauseOnHover: true,
-        //     });
-        //     return;
-        // }
+        if (!isAllowedToPurchase) {
+            // Display an error message or take appropriate action
+            toast.error("The market is currently closed", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+                hideProgressBar: false,
+                pauseOnHover: true,
+            });
+            return;
+        }
 
         if (orderQty < 1) {
             setQtyErr(true);

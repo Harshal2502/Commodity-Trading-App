@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ADMIN_USERS, GETALL_CANCEL_ORDERS_ADMIN, GETALL_EXPIRED_ORDERS_ADMIN, GETALL_ORDERS_ADMIN, GET_ALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN, GETALL_SQRD_ORDERS_ADMIN, FETCH_ALL_ORDERS, DELETEORDER } from '../../utils/API';
+import { ADMIN_USERS, GETALL_CANCEL_ORDERS_ADMIN, GETALL_EXPIRED_ORDERS_ADMIN, GETALL_ORDERS_ADMIN, GET_ALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN, GETALL_SQRD_ORDERS_ADMIN, FETCH_ALL_ORDERS, DELETEORDER, SUPERADMIN_ADMINS } from '../../utils/API';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -20,29 +20,26 @@ const OrderDetails = () => {
     const [sort, setSort] = useState();
     const [orderArray, setOrderArray] = useState([]);
     const [sortArray, setSortArray] = useState([]);
+    const [subadmin, setsubadmin] = useState("");
+    const [subadminArray, setsubadminArray] = useState([]);
 
     useEffect(() => {
         const fun = async () => {
-            const res = await FETCH_ALL_ORDERS(username);
-            const singleArray = [].concat(...res);
-            setOrderArray(singleArray);
-            setSortArray(singleArray);
+            const res = await SUPERADMIN_ADMINS(username);
+            setsubadminArray(res);
         }
         fun();
-    }, [username])
+    }, [username]);
 
     const applySort = async () => {
-        if (sort === "all") {
-            setSortArray(orderArray);
-            return;
-        }
-        setSortArray(orderArray.filter((order) => order.order_status === sort));
+        const res = await FETCH_ALL_ORDERS(subadmin);
+        const singleArray = [].concat(...res);
+        setSortArray(singleArray);
     }
 
-    const handleClick = (e) => {
-        const res = DELETEORDER(username, e.taregt.value);
-        console.log(res);
-        toast.info(res.message, {
+    const handleClick = async (e, user) => {
+        const res = await DELETEORDER(user, e.target.value);
+        toast.info(res.status, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             hideProgressBar: false,
@@ -68,14 +65,14 @@ const OrderDetails = () => {
                     <div className="card-body">
                         <form className="form-inline">
 
-                            <select onChange={(e) => setSort(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
+                            <select onChange={(e) => setsubadmin(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
+                                <option selected disabled>Select Master</option>
+                                {subadminArray?.map((entry) => {
 
-                                <option value="all" selected>All Orders</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Squaredoff">Executed</option>
-                                <option value="Placed">Placed</option>
-                                <option value="Cancelled">Cancelled</option>
-                                <option value="Expired">Expired</option>
+                                    return (
+                                        <option value={entry}>{entry}</option>
+                                    )
+                                })}
                             </select>
                             <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">Show</button>
                         </form>
@@ -112,7 +109,7 @@ const OrderDetails = () => {
 
                                     {sortArray?.map((entry) => {
 
-                                        if (entry === null) return;
+                                        {/* if (entry === null) return; */}
 
                                         const dateObj = new Date(entry.asset.expiredat);
                                         const day = dateObj.getDate();
@@ -141,7 +138,7 @@ const OrderDetails = () => {
                                                     <td> {formattedDate3 ?? "-"} </td>
                                                     <td> {entry?.CFstatus ?? "-"} </td>
                                                     <td> {entry?.order_status ?? "-"} </td>
-                                                    <td> <button onClick={handleClick} value={entry.order_id} className='btn btn-primary'> S/O </button> </td>
+                                                    <td> <button onClick={(e) => handleClick(e, entry.username)} value={entry.order_id} className='btn btn-primary'> Terminate </button> </td>
                                                 </tr>
                                             </tbody>
                                         )

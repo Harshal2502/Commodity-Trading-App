@@ -93,6 +93,41 @@ export const ADD_ADMIN = async (formdata, superadmin) => {
 
 }
 
+export const ADD_SUPERADMIN = async (formdata, supermaster) => { //*
+
+  const options = {
+    params: {
+      supermaster
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.ADDSUPERADMIN, formdata, options)
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const ADD_SUPERMASTER = async (username, formdata) => {
+
+  const options = {
+    params: {
+      username: username
+    }
+  }
+
+  try {
+    const res = await axios.post(API_ROUTES.ADDSUPERMASTER, formdata, options)
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const ADMIN_USERS = async (username) => {
 
   const options = {
@@ -121,6 +156,24 @@ export const SUPERADMIN_ADMINS = async (username) => {
 
   try {
     const res = await axios.get(API_ROUTES.SUPERADMIN_ADMINS, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const SUPERMASTER_SUPERADMINS = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.SUPERMASTER_SUPERADMINS, options);
     return res.data;
   }
   catch (error) {
@@ -181,6 +234,41 @@ export const USERINFO = async (username) => {
 
 }
 
+export const SUPERADMININFO = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.SUPERADMININFO, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const SUPERMASTERINFO = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.SUPERMASTERINFO, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const DELETE_USER = async (admin, user) => {
 
   const options = {
@@ -211,6 +299,25 @@ export const DELETE_ADMIN = async (superadmin, admin) => {
 
   try {
     const res = await axios.delete(API_ROUTES.DELETE_ADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const DELETE_SUPERADMIN = async (supermaster, superadmin) => { //*
+
+  const options = {
+    params: {
+      username_superadmin: superadmin,
+      username_supermaster: supermaster
+    },
+  };
+
+  try {
+    const res = await axios.delete(API_ROUTES.DELETE_SUPERADMIN, options);
     return res.data;
   }
   catch (error) {
@@ -283,10 +390,81 @@ export const UPDATE_PASSWORD_USER = async (username, oldpassword, newpassword) =
     }
   };
 
-  console.log(body, options)
 
   try {
     const res = await axios.post(API_ROUTES.UPDATE_PASSWORD_USER, body, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const UPDATE_PASSWORD_ADMIN = async (username, oldpassword, newpassword) => { //*
+
+  const body = {
+    oldpassword: oldpassword,
+    newpassword: newpassword,
+  }
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+
+  try {
+    const res = await axios.post(API_ROUTES.UPDATE_PASSWORD_ADMIN, body, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const UPDATE_PASSWORD_SUPERADMIN = async (username, oldpassword, newpassword) => { //*
+
+  const body = {
+    oldpassword: oldpassword,
+    newpassword: newpassword,
+  }
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+
+  try {
+    const res = await axios.post(API_ROUTES.UPDATE_PASSWORD_SUPERADMIN, body, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const UPDATE_PASSWORD_SUPERMASTER = async (username, oldpassword, newpassword) => { //*
+
+  const body = {
+    oldpassword: oldpassword,
+    newpassword: newpassword,
+  }
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+
+  try {
+    const res = await axios.post(API_ROUTES.UPDATE_PASSWORD_SUPERMASTER, body, options);
     return res.data;
   }
   catch (error) {
@@ -778,6 +956,59 @@ export const GET_ACCOUNT_CONTENT = async (username) => {
 
 }
 
+export const GET_ACCOUNT_CONTENT_ADMIN = async (username) => { //*
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.GET_ACCOUNT_CONTENT_ADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const GET_ACCOUNT_CONTENT_SUPERADMIN = async (username) => { //*
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.GET_ACCOUNT_CONTENT_SUPERADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const GET_ACCOUNT_CONTENT_SUPERMASTER = async (username) => { //*
+
+  const options = {
+    params: {
+      username: username,
+    }
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.GET_ACCOUNT_CONTENT_SUPERMASTER, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const GET_MARGIN_BY_USER = async (username) => {
 
   const options = {
@@ -816,12 +1047,12 @@ export const CREDIT_CASHBALANCE_USER = async (username_admin, username_user, amo
 
 }
 
-export const CREDIT_CASHBALANCE_ADMIN = async (username_admin, username_user, amount) => {
+export const CREDIT_CASHBALANCE_ADMIN = async (username_superadmin, username_admin, amount) => {//*
 
   const options = {
     params: {
-      username_superadmin: username_admin,
-      username_admin: username_user,
+      username_superadmin: username_superadmin,
+      username_admin: username_admin,
       amount: amount
     },
   };
@@ -836,6 +1067,25 @@ export const CREDIT_CASHBALANCE_ADMIN = async (username_admin, username_user, am
 
 }
 
+export const CREDIT_CASHBALANCE_SUPERADMIN = async (username_supermaster, username_superadmin, amount) => { //*
+
+  const options = {
+    params: {
+      username_supermaster: username_supermaster,
+      username_superadmin: username_superadmin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.CREDIT_CASHBALANCE_SUPERADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const CREDIT_VIRTUALBALANCE_USER = async (username_admin, username_user, amount) => {
 
   const options = {
@@ -848,6 +1098,65 @@ export const CREDIT_VIRTUALBALANCE_USER = async (username_admin, username_user, 
 
   try {
     const res = await axios.post(API_ROUTES.CREDIT_VIRTUALBALANCE_USER, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const CREDIT_VIRTUALBALANCE_ADMIN = async (username_superadmin, username_admin, amount) => {//*
+
+  const options = {
+    params: {
+      username_superadmin: username_superadmin,
+      username_admin: username_admin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.CREDIT_VIRTUALBALANCE_ADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const CREDIT_VIRTUALBALANCE_SUPERADMIN = async (username_supermaster, username_superadmin, amount) => {//*
+
+  const options = {
+    params: {
+      username_supermaster: username_supermaster,
+      username_superadmin: username_superadmin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.CREDIT_VIRTUALBALANCE_SUPERADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const CREDIT_BALANCE_SUPERMASTER = async (username_supermaster, amount) => {//*
+
+  const options = {
+    params: {
+      username_supermaster: username_supermaster,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.CREDIT_BALANCE_SUPERMASTER, {}, options);
     return res.data;
   }
   catch (error) {
@@ -896,12 +1205,12 @@ export const DEBIT_VIRTUALBALANC_USER = async (username_admin, username_user, am
 
 }
 
-export const DEBIT_CASHBALANC_ADMIN = async (username_admin, username_user, amount) => {
+export const DEBIT_CASHBALANC_ADMIN = async (username_superadmin, username_admin, amount) => {//*
 
   const options = {
     params: {
-      username_superadmin: username_admin,
-      username_admin: username_user,
+      username_superadmin: username_superadmin,
+      username_admin: username_admin,
       amount: amount
     },
   };
@@ -916,6 +1225,65 @@ export const DEBIT_CASHBALANC_ADMIN = async (username_admin, username_user, amou
 
 }
 
+export const DEBIT_VIRTUALBALANC_ADMIN = async (username_superadmin, username_admin, amount) => {//*
+
+  const options = {
+    params: {
+      username_superadmin: username_superadmin,
+      username_admin: username_admin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.DEBIT_VIRTUALBALANC_ADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const DEBIT_CASHBALANC_SUPERADMIN = async (username_supermaster, username_superadmin, amount) => {//*
+
+  const options = {
+    params: {
+      username_supermaster: username_supermaster,
+      username_superadmin: username_superadmin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.DEBIT_CASHBALANC_SUPERADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const DEBIT_VIRTUALBALANC_SUPERADMIN = async (username_supermaster, username_superadmin, amount) => {//*
+
+  const options = {
+    params: {
+      username_supermaster: username_supermaster,
+      username_superadmin: username_superadmin,
+      amount: amount
+    },
+  };
+
+  try {
+    const res = await axios.post(API_ROUTES.DEBIT_VIRTUALBALANC_SUPERADMIN, {}, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const GET_EXCHANGES = async () => {
 
   try {
@@ -1003,24 +1371,6 @@ export const GET_EXPIRY = async (exchange, instrument, product) => {
 
 }
 
-export const FETCH_INVOICE = async (username) => {
-
-  const options = {
-    params: {
-      username: username,
-
-    },
-  };
-
-  try {
-    const res = await axios.get(API_ROUTES.FETCH_INVOICE, options);
-    return res.data;
-  }
-  catch (error) {
-    return error;
-  }
-
-}
 
 export const GET_PORTFOLIO_ADMIN_SINGLEUSER = async (username) => {
 
@@ -1132,6 +1482,54 @@ export const EDIT_USER = async (admin, user, formData) => {
 
 }
 
+export const EDIT_ADMIN = async (superadmin, admin, newpassword) => { //*
+
+  const query = {
+    params: {
+      username_superadmin: superadmin,
+      username_admin: admin,
+    },
+  };
+
+  const body = {
+    newpassword: newpassword
+  };
+
+
+  try {
+    const res = await axios.patch(API_ROUTES.EDIT_ADMIN, query, body);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const EDIT_SUPERADMIN = async (supermaster, superadmin, newpassword) => { //*
+
+  const query = {
+    params: {
+      username_superadmin: superadmin,
+      username_supermaster: supermaster,
+    },
+  };
+
+  const body = {
+    newpassword: newpassword
+  };
+
+
+  try {
+    const res = await axios.patch(API_ROUTES.EDIT_SUPERADMIN, query, body);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
 export const FETCH_BACKOFFICE_SUBADMIN = async (username) => {
 
   const options = {
@@ -1150,6 +1548,41 @@ export const FETCH_BACKOFFICE_SUBADMIN = async (username) => {
 
 }
 
+export const FETCH_BACKOFFICE_SUPERADMIN = async (username) => { //*
+
+  const options = {
+    params: {
+      username: username,
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_BACKOFFICE_SUPERADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_BACKOFFICE_SUPERMASTER = async (username) => {//*
+
+  const options = {
+    params: {
+      username: username,
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_BACKOFFICE_SUPERMASTER, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
 export const FETCH_ALL_ORDERS = async (username) => {
 
   const options = {
@@ -1178,7 +1611,147 @@ export const DELETEORDER = async (username, id) => {
   };
 
   try {
-    const res = await axios.get(API_ROUTES.DELETEORDER, options);
+    const res = await axios.delete(API_ROUTES.DELETEORDER, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const UPDATE_BRKG = async (username_admin, username_user, fixbrokereage_MCX, fixbrokereage_NFO) => { //*
+
+  const options = {
+    params: {
+      username_admin: username_admin,
+      username_user: username_user,
+    },
+  };
+
+  const body = {
+    symbol: ["SILVER", "SILVERM", "SILVERMIC", "GOLD", "GOLDM", "GOLDMIC", "COPPER", "COPPERMIC", "LEAD", "LEADMIC", "ZINC", "ZINCMIC", "NATURALGAS", "NATURALGASMIC", "CRUDEOIL", "CRUDEOILMIC"],
+    fixbrokereage_MCX, fixbrokereage_NFO
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.UPDATE_BRKG, body, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const UPDATE_BRKG_ALLUSERS = async (username_admin, fixbrokereage_MCX, fixbrokereage_NFO) => { //*
+
+  const options = {
+    params: {
+      username_admin: username_admin
+    },
+  };
+
+  const body = {
+    symbol: ["SILVER", "SILVERM", "SILVERMIC", "GOLD", "GOLDM", "GOLDMIC", "COPPER", "COPPERMIC", "LEAD", "LEADMIC", "ZINC", "ZINCMIC", "NATURALGAS", "NATURALGASMIC", "CRUDEOIL", "CRUDEOILMIC"],
+    fixbrokereage_MCX, fixbrokereage_NFO
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.UPDATE_BRKG_ALLUSERS, body, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_INVOICE = async (username, billno) => { //*
+
+  const options = {
+    params: {
+      username, billno
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_INVOICE, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_INVOICE_USER = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_INVOICE_USER, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_INVOICE_ADMIN = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_INVOICE_ADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_INVOICE_SUPERADMIN = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_INVOICE_SUPERADMIN, options);
+    return res.data;
+  }
+  catch (error) {
+    return error;
+  }
+
+}
+
+export const FETCH_INVOICE_SUPERMASTER = async (username) => { //*
+
+  const options = {
+    params: {
+      username
+    },
+  };
+
+  try {
+    const res = await axios.get(API_ROUTES.FETCH_INVOICE_SUPERMASTER, options);
     return res.data;
   }
   catch (error) {
