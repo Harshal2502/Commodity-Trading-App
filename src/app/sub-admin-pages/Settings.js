@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap';
-import { UPDATE_PASSWORD_USER } from '../../utils/API';
+import { UPDATE_PASSWORD_ADMIN, UPDATE_PASSWORD_USER } from '../../utils/API';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 
 
 export const Settingss = () => {
+
+  const { username } = useSelector((state) => {
+    if (!state) {
+      return {
+        username: null
+      };
+    }
+    return {
+      username: state.username
+    };
+  });
 
   const [oldpassword, setOldpassword] = useState()
   const [newpassword, setNewpassword] = useState()
@@ -25,7 +37,9 @@ export const Settingss = () => {
       return;
     }
 
-    const res = await UPDATE_PASSWORD_USER();
+    // Cannot POST /api/user/admin/UpdateAdminInfo
+
+    const res = await UPDATE_PASSWORD_ADMIN(username, oldpassword, newpassword);
     console.log(res);
 
   }
@@ -215,7 +229,7 @@ export const Settingss = () => {
 
 
 
-                <button onclick={(e) => handlePasswordSave(e)} className="btn btn-gradient-primary mr-2">Save New Password</button>
+                <button onClick={(e) => handlePasswordSave(e)} className="btn btn-gradient-primary mr-2">Save New Password</button>
                 {/* <button className="btn btn-light">Cancel</button> */}
               </form>
             </div>

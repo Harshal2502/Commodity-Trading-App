@@ -23,10 +23,11 @@ const OrderDetails = () => {
 
     useEffect(() => {
         const fun = async () => {
-            const res = await FETCH_ALL_ORDERS(username);
-            const singleArray = [].concat(...res);
-            setOrderArray(singleArray);
-            setSortArray(singleArray);
+            const res = await FETCH_ALL_ORDERS(username); // We have to pass 3rd role from top to this API call and no API to fetch all admins with master
+            console.log(res);
+            // const singleArray = [].concat(...res);
+            // setOrderArray(singleArray);
+            // setSortArray(singleArray);
         }
         fun();
     }, [username])

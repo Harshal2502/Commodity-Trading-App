@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT } from '../../utils/API';
+import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT, GET_ACCOUNT_CONTENT_SUPERMASTER } from '../../utils/API';
 import { useSelector } from 'react-redux';
 
 export function Accounts() {
@@ -21,17 +21,17 @@ export function Accounts() {
   const [accountContent, setAccountContent] = useState();
 
   useEffect(() => {
-    getUserInfo();
+    // getUserInfo();
     getAccountContent();
   }, []);
 
-  const getUserInfo = async () => {
-    const res = await ADMININFO(username);
-    setUserInfo(res)
-  }
+  // const getUserInfo = async () => {
+  //   const res = await ADMININFO(username);
+  //   setUserInfo(res)
+  // }
 
   const getAccountContent = async () => {
-    const res = await GET_ACCOUNT_CONTENT(username);
+    const res = await GET_ACCOUNT_CONTENT_SUPERMASTER(username);
     console.log(res)
     setAccountContent(res);
   }
@@ -144,7 +144,7 @@ export function Accounts() {
         </div>
 
 
-        <div className="col-12 grid-margin stretch-card" style={{ marginBottom: 0 }}>
+        {/* <div className="col-12 grid-margin stretch-card" style={{ marginBottom: 0 }}>
           <div className="card btn btn-gradient-dark">
             <div className="card-body text-center" style={{ paddingBottom: 0, paddingTop: "1rem", display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
               <div>
@@ -167,7 +167,7 @@ export function Accounts() {
             </div>
 
           </div>
-        </div>
+        </div> */}
 
 
 

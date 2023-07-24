@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { FETCH_INVOICE } from '../../utils/API';
+import { FETCH_INVOICE, FETCH_INVOICE_USER } from '../../utils/API';
 import { useSelector } from 'react-redux';
 
 export const Invoice = () => {
 
     const { username } = useSelector((state) => {
         if (!state) {
-          return { 
-            username: null
-           };
+            return {
+                username: null
+            };
         }
         return {
-          username: state.username
+            username: state.username
         };
-      });
+    });
+
+    const [invoiceArray, setInvoiceArray] = useState([1]);
+    const [bill, setBill] = useState();
+
 
     useEffect(() => {
         fetchInvoice();
-    }, [])
+    }, []);
 
     const fetchInvoice = async () => {
-        const res = await FETCH_INVOICE(username);
-        // setInvoiceArray(res.invoice);
-        console.log(res);
+        const res = await FETCH_INVOICE_USER(username);
+        console.log(res)
+        setInvoiceArray(res);
     }
 
-    const [invoiceArray, setInvoiceArray] = useState([1]);
-    const [bills, setBills] = useState();
 
     return (
         <div>
@@ -35,7 +37,7 @@ export const Invoice = () => {
                 <div className="col-lg-12 grid-margin stretch-card">
                     <div className="card">
                         <div className="card-body">
-                            <h4 className="card-title">Invoice ({invoiceArray.length})</h4>
+                            <h4 className="card-title">Invoice ({invoiceArray?.length})</h4>
                             <div className="table-responsive">
                                 <table className="table table-striped">
                                     <thead>
@@ -43,11 +45,11 @@ export const Invoice = () => {
                                             <th> Bill No. </th>
                                             <th> From-Date </th>
                                             <th> To-Date </th>
-                                            <th>Brokerage</th>
+                                            <th> Brokerage </th>
                                             <th> Net-Amount </th>
-                                            <th>Bill-Amount</th>
+                                            <th> Bill-Amount </th>
                                             <th> Date-of-Bill </th>
-                                            <th>View</th>
+                                            <th> View </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,16 +57,34 @@ export const Invoice = () => {
                                         {
                                             invoiceArray?.map((entry) => {
 
+                                                const dateObj = new Date(entry?.createdAt);
+                                                const day = dateObj.getDate();
+                                                const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
+                                                const year = dateObj.getFullYear();
+                                                const formattedDate = `${day}${month}${year}`;
+
+                                                const dateObj1 = new Date(entry?.from);
+                                                const day1 = dateObj1.getDate();
+                                                const month1 = dateObj1.toLocaleString('default', { month: 'short' }).toUpperCase();
+                                                const year1 = dateObj1.getFullYear();
+                                                const formattedDate1 = `${day1}${month1}${year1}`;
+
+                                                const dateObj2 = new Date(entry?.to);
+                                                const day2 = dateObj2.getDate();
+                                                const month2 = dateObj2.toLocaleString('default', { month: 'short' }).toUpperCase();
+                                                const year2 = dateObj2.getFullYear();
+                                                const formattedDate2 = `${day2}${month2}${year2}`;
+
                                                 return (
                                                     <tr>
-                                                        <td> 9939 </td>
-                                                        <td> 2023-05-08 07:00:00 </td>
-                                                        <td> 2023-05-13 00:12:26 </td>
-                                                        <td> 3636.60 </td>
-                                                        <td> 53001.00 </td>
-                                                        <td> 49364.40 </td>
-                                                        <td> 13-05-2023 (00:12)  </td>
-                                                        <td> <button onClick={() => setBills([1])}>View Bill </button></td>
+                                                        <td> {entry?.billno ?? "-"} </td>
+                                                        <td> {formattedDate1 ?? "-"} </td>
+                                                        <td> {formattedDate2 ?? "-"} </td>
+                                                        <td> {entry?.brokerage ?? "-"} </td>
+                                                        <td> {entry?.netamount ?? "-"} </td>
+                                                        <td> {entry?.billamount ?? "-"} </td>
+                                                        <td> {formattedDate ?? "-"} </td>
+                                                        <td> <button onClick={() => setBill([entry])}> View Bill </button></td>
                                                     </tr>
                                                 )
                                             })
@@ -78,7 +98,25 @@ export const Invoice = () => {
 
 
                 {
-                    bills?.map((entry, index) => {
+                    bill?.map((entry, index) => {
+
+                        const dateObj = new Date(entry?.createdAt);
+                        const day = dateObj.getDate();
+                        const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
+                        const year = dateObj.getFullYear();
+                        const formattedDate = `${day}${month}${year}`;
+
+                        const dateObj1 = new Date(entry?.from);
+                        const day1 = dateObj1.getDate();
+                        const month1 = dateObj1.toLocaleString('default', { month: 'short' }).toUpperCase();
+                        const year1 = dateObj1.getFullYear();
+                        const formattedDate1 = `${day1}${month1}${year1}`;
+
+                        const dateObj2 = new Date(entry?.to);
+                        const day2 = dateObj2.getDate();
+                        const month2 = dateObj2.toLocaleString('default', { month: 'short' }).toUpperCase();
+                        const year2 = dateObj2.getFullYear();
+                        const formattedDate2 = `${day2}${month2}${year2}`;
 
                         return (
 
@@ -88,9 +126,9 @@ export const Invoice = () => {
 
                                     <div class="card-body">
                                         <div class="container-fluid">
-                                            <h4 class="float-left"><i class="mdi mdi-earth"></i>{username}</h4>
+                                            <h4 class="float-left"><i class="mdi mdi-earth"></i>{entry.username}</h4>
 
-                                            <h6 class="text-right">From: (<span id="from_date_field">2023-05-08</span>) To: (<span id="to_date_field">2023-05-13</span>)</h6>
+                                            <h6 class="text-right">From: (<span id="from_date_field">{formattedDate1}</span>) To: (<span id="to_date_field">{formattedDate2}</span>)</h6>
 
                                             <hr></hr>
                                         </div>
@@ -98,13 +136,13 @@ export const Invoice = () => {
                                             <div class="col-lg-3 pl-0">
                                             </div>
                                             <div class="col-lg-3 pr-0">
-                                                <p class="mt-5 mb-2 text-right"><b>Invoice #9939</b></p>
-                                                <p class="text-right"><b>Client ID: {username}</b><br></br> <b>Net Amount:</b> 53001.00<br></br> <b>Brokrage:</b> 3636.60 <br></br><br></br><b>Bill Amount:</b> Rs. 49364.40</p>
+                                                <p class="mt-5 mb-2 text-right"><b>Invoice #{entry.billno}</b></p>
+                                                <p class="text-right"><b>Client ID: {entry.username}</b><br></br> <b>Net Amount:</b> {entry.netamount} <br></br> <b>Brokrage:</b> {entry.brokerage} <br></br><br></br><b>Bill Amount:</b> Rs. {entry.billamount}</p>
                                             </div>
                                         </div>
 
                                         <div class="row invoice_instu_box">
-                                            <p class="textcenter invoice_instu_title">MCX SILVER 03DEC2021</p>
+                                            <p class="textcenter invoice_instu_title"> {entry?.orders[0].InstrumentIdentifier.split("_")[0]} {entry?.orders[0].InstrumentIdentifier.split("_")[1]} {entry?.orders[0].InstrumentIdentifier.split("_")[2]} </p>
                                             <div class="container-fluid mt-5 d-flex justify-content-center w-100">
 
                                                 <div class="col-xs-6 table-responsive w-100">

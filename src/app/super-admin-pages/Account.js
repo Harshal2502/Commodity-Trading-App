@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT } from '../../utils/API';
+import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT, GET_ACCOUNT_CONTENT_SUPERADMIN } from '../../utils/API';
 import { useSelector } from 'react-redux';
 
 export function Accounts() {
+
+  // Not sure of dropdowns
 
   const { username } = useSelector((state) => {
     if (!state) {
@@ -31,7 +33,7 @@ export function Accounts() {
   }
 
   const getAccountContent = async () => {
-    const res = await GET_ACCOUNT_CONTENT(username);
+    const res = await GET_ACCOUNT_CONTENT_SUPERADMIN(username);
     console.log(res)
     setAccountContent(res);
   }
@@ -67,7 +69,7 @@ export function Accounts() {
             <form className="form-inline">
             <select className="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-3" >
 
-              <option  selected disabled>Select Admin</option>
+              <option selected disabled >Select Admin</option>
               <option value="admin1">Admin 1</option>
               <option value="admin2">Admin 2</option>
               <option value="admin3">Admin 3</option>

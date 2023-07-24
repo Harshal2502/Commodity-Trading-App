@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT } from '../../utils/API';
+import { ADMININFO, ADMIN_USERS, GET_ACCOUNT_CONTENT, GET_ACCOUNT_CONTENT_ADMIN } from '../../utils/API';
 import { useSelector } from 'react-redux';
 
 export function Accounts() {
@@ -33,7 +33,7 @@ export function Accounts() {
   }
 
   const getAccountContent = async () => {
-    const res = await GET_ACCOUNT_CONTENT(username);
+    const res = await GET_ACCOUNT_CONTENT_ADMIN(username);
     setOrderArray(res.reverse());
     setSortArray(res);
   }

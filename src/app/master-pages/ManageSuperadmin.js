@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ADMIN_USERS, DELETE_USER } from '../../utils/API';
+import { ADMIN_USERS, DELETE_SUPERADMIN, DELETE_USER, SUPERMASTER_SUPERADMINS } from '../../utils/API';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
@@ -10,9 +10,9 @@ const ManageSuperadmin = () => {
 
   const { username } = useSelector((state) => {
     if (!state) {
-      return { 
+      return {
         username: null
-       };
+      };
     }
     return {
       username: state.username
@@ -25,8 +25,10 @@ const ManageSuperadmin = () => {
     fetchUsers();
   }, []);
 
+  // SuperMaster Head not found
+
   const fetchUsers = async () => {
-    const res = await ADMIN_USERS(username);
+    const res = await SUPERMASTER_SUPERADMINS(username);
     console.log(res)
     setUserArray(res.users);
   }
@@ -34,13 +36,13 @@ const ManageSuperadmin = () => {
   const suspendUser = async (user) => {
     const consent = window.confirm("are you sure want to suspend " + user + "?");
     if (consent === true) {
-      const res = await DELETE_USER(username, user);
+      const res = await DELETE_SUPERADMIN(username, user);
       toast.warning(res.message, {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
         hideProgressBar: false,
         pauseOnHover: true,
-    });
+      });
 
       fetchUsers();
     }
@@ -66,7 +68,7 @@ const ManageSuperadmin = () => {
 
       <div className="card-body">
         <form className="form-inline">
-          <Link to="/master_spa/add_user" className="btn btn-gradient-primary mb-2">
+          <Link to="/admin_admin/add_supermaster" className="btn btn-gradient-primary mb-2">
             <i className="mdi mdi-account-plus"></i> ADD SUPERMASTER
           </Link>
         </form>
@@ -85,12 +87,6 @@ const ManageSuperadmin = () => {
                       <th> UserCode </th>
                       <th> Name </th>
                       <th> Reg. Date </th>
-                      <th> MCX Allow </th>
-                      <th> FONSE Allow </th>
-                      <th> NFO-BKRG </th>
-                      <th> MCX-BKRG </th>
-                      <th> Upper-Limit </th>
-                      <th> Margin-Limit(x) </th>
                       <th> Edit User </th>
                       <th> Delete User </th>
                     </tr>
@@ -107,12 +103,6 @@ const ManageSuperadmin = () => {
                           <td>{entry.username}</td>
                           <td>{entry.fullname}</td>
                           <td>{formattedDate} ({formattedTime})</td>
-                          <td>{entry.assetoptions.MCX_allow ? "YES" : "No"}</td>
-                          <td>{entry.assetoptions.FONSE_allow ? "YES" : "No"}</td>
-                          <td>{entry.assetoptions.brokereage_NFO}</td>
-                          <td>{entry.assetoptions.brokereage_MCX}</td>
-                          <td>{entry.assetoptions.profit_limit}</td>
-                          <td>{entry.assetoptions.margin_limit}</td>
                           <td>
                             <i
                               className="mdi mdi-pencil-box"

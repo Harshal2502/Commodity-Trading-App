@@ -93,13 +93,16 @@ export const ADD_ADMIN = async (formdata, superadmin) => {
 
 }
 
-export const ADD_SUPERADMIN = async (formdata, supermaster) => { //*
+export const ADD_SUPERADMIN = async (formdata, supermaster) => { 
 
   const options = {
     params: {
       supermaster
     },
   };
+
+  console.log(formdata)
+  console.log(supermaster)
 
   try {
     const res = await axios.post(API_ROUTES.ADDSUPERADMIN, formdata, options)

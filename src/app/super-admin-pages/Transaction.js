@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ADMIN_USERS, CREDIT_CASHBALANCE_ADMIN, CREDIT_CASHBALANCE_USER, CREDIT_VIRTUALBALANCE_USER, DEBIT_CASHBALANC_ADMIN, DEBIT_CASHBALANC_USER, DEBIT_VIRTUALBALANC_USER, SUPERADMIN_ADMINS } from "../../utils/API";
+import { ADMIN_USERS, CREDIT_CASHBALANCE_ADMIN, CREDIT_CASHBALANCE_USER, CREDIT_VIRTUALBALANCE_ADMIN, CREDIT_VIRTUALBALANCE_USER, DEBIT_CASHBALANC_ADMIN, DEBIT_CASHBALANC_USER, DEBIT_VIRTUALBALANC_ADMIN, DEBIT_VIRTUALBALANC_USER, SUPERADMIN_ADMINS } from "../../utils/API";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
@@ -36,7 +36,7 @@ const SuperTransaction = () => {
     const [loader3, setLoader3] = useState();
 
     useEffect(() => {
-        fetchUsers();
+        // fetchUsers();
         fetchAdmin();
     }, []);
 
@@ -51,7 +51,7 @@ const SuperTransaction = () => {
 
     const fetchAdmin = async () => {
         const res = await SUPERADMIN_ADMINS(username);
-        setAdminArray(res.admins);
+        setAdminArray(res);
     }
 
     const handleClientChange1 = (e) => {
@@ -113,7 +113,7 @@ const SuperTransaction = () => {
         }
 
         else if (option1 === "virtual") {
-            const res = await CREDIT_VIRTUALBALANCE_USER(username, adminItem, amount1);
+            const res = await CREDIT_VIRTUALBALANCE_ADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -175,7 +175,7 @@ const SuperTransaction = () => {
 
         setLoader3(true);
         if (option1 === "cash") {
-            const res = await DEBIT_CASHBALANC_ADMIN(username, adminItem, amount);
+            const res = await DEBIT_CASHBALANC_ADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -185,7 +185,7 @@ const SuperTransaction = () => {
         }
 
         else if (option1 === "virtual") {
-            const res = await DEBIT_VIRTUALBALANC_USER(username, clientItem, amount);
+            const res = await DEBIT_VIRTUALBALANC_ADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -207,14 +207,7 @@ const SuperTransaction = () => {
 
     return (
         <>
-            <div className="page-header">
-                <h3 className="page-title">User Transaction </h3>
-                {/* <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Transaction </a></li>
-                        <li className="breadcrumb-item active" aria-current="page">Make Transactions</li>
-                    </ol>
-                </nav> */}
+            {/* <div className="page-header">
             </div>
 
             <div className="card">
@@ -254,15 +247,9 @@ const SuperTransaction = () => {
                 </div>
             </div>
 
-            <br></br>
+            <br></br> */}
             <div className="page-header">
                 <h3 className="page-title"> Admin Transaction </h3>
-                {/* <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Transaction </a></li>
-                        <li className="breadcrumb-item active" aria-current="page">Make Transactions</li>
-                    </ol>
-                </nav> */}
             </div>
 
             <div className="card">
@@ -275,7 +262,7 @@ const SuperTransaction = () => {
                                 {adminArray?.map((entry) => {
 
                                     return (
-                                        <option value={entry.username}>{entry.username}</option>
+                                        <option value={entry}>{entry}</option>
                                     )
                                 })}
                             </select>

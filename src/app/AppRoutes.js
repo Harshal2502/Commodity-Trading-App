@@ -7,6 +7,9 @@ import SuperTransaction from './super-admin-pages/Transaction';
 import MasterTransaction from './master-pages/Transaction';
 import { MasterAuth } from './shared/MasterAuth';
 import EditUser from './shared/EditUser';
+import AddSuperAdmin from './master-pages/AddSuperAdmin';
+import EditAdmin from './super-admin-pages/EditAdmin';
+import EditSuperadmin from './master-pages/EditSuperadmin';
 
 
 
@@ -154,6 +157,7 @@ const AppRoutes = () => {
         <Route path="/supermaster_main/add_user" element={<SuperadminAuth><SuperAddUser /></SuperadminAuth>} />
         <Route path="/supermaster_main/manage_admin" element={<SuperadminAuth><SuperManageAdmin /></SuperadminAuth>} />
         <Route path="/supermaster_main/add_admin" element={<SuperadminAuth><SuperAddAdmin /></SuperadminAuth>} />
+        <Route path="/supermaster_main/editmaster" element={<SuperadminAuth><EditAdmin /></SuperadminAuth>} />
         <Route path="/supermaster_main/invoice" element={<SuperadminAuth><SuperInvoice /></SuperadminAuth>} />
         <Route path="/supermaster_main/summary" element={<SuperadminAuth><SuperSummary /></SuperadminAuth>} />
         <Route path="/supermaster_main/settings" element={<SuperadminAuth><SuperSettings /></SuperadminAuth>} />
@@ -180,7 +184,8 @@ const AppRoutes = () => {
         <Route path="/admin_admin/manage_supermasters" element={<MasterAuth><ManageSuperadmin /></MasterAuth>} />
         <Route path="/admin_admin/add_user" element={<MasterAuth><MasterAddUser /></MasterAuth>} />
         <Route path="/admin_admin/add_master" element={<MasterAuth><MasterAddAdmin /></MasterAuth>} />
-        <Route path="/admin_admin/add_supermaster" element={<MasterAuth><MasterAddAdmin /></MasterAuth>} />
+        <Route path="/admin_admin/add_supermaster" element={<MasterAuth><AddSuperAdmin /></MasterAuth>} />
+        <Route path="/admin_admin/editsupermaster" element={<MasterAuth><EditSuperadmin /></MasterAuth>} />
         <Route path="/admin_admin/invoice" element={<MasterAuth><MasterInvoice /></MasterAuth>} />
         <Route path="/admin_admin/summary" element={<MasterAuth><MasterSummary /></MasterAuth>} />
         <Route path="/admin_admin/settings" element={<MasterAuth><MasterSettings /></MasterAuth>} />

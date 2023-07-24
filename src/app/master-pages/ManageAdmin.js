@@ -66,7 +66,7 @@ const ManageAdmin = () => {
 
       <div className="card-body">
         <form className="form-inline">
-          <Link to="/supermaster_main/add_admin" className="btn btn-gradient-primary mb-2">
+          <Link to="/admin_admin/add_master" className="btn btn-gradient-primary mb-2">
             <i className="mdi mdi-account-plus"></i> ADD MASTER
           </Link>
         </form>

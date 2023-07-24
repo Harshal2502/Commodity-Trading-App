@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ADMIN_USERS, DELETE_ADMIN, DELETE_USER, SUPERADMIN_ADMINS } from '../../utils/API';
+import { Link, useNavigate } from 'react-router-dom';
+import { ADMIN_USERS, DELETE_ADMIN, DELETE_USER, SUPERADMIN_ADMINS, EDIT_ADMIN } from '../../utils/API';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
@@ -19,6 +19,9 @@ const ManageAdmin = () => {
     };
   });
 
+
+  const navigate = useNavigate();
+
   const [userArray, setUserArray] = useState([]);
 
   useEffect(() => {
@@ -27,8 +30,7 @@ const ManageAdmin = () => {
 
   const fetchUsers = async () => {
     const res = await SUPERADMIN_ADMINS(username);
-    console.log(res)
-    setUserArray(res.admins);
+    setUserArray(res);
   }
 
   const suspendUser = async (user) => {
@@ -46,19 +48,23 @@ const ManageAdmin = () => {
     }
   }
 
+  const handleEdit = (entry) => {
+    navigate('/supermaster_main/editmaster', { state: entry });
+  }
+
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title"> Admin Management </h3>
+        <h3 className="page-title"> Master Management </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               <a href="!#" onClick={(event) => event.preventDefault()}>
-                Admin Management
+                Master Management
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Manage Your Admins
+              Manage Your Masters
             </li>
           </ol>
         </nav>
@@ -67,7 +73,7 @@ const ManageAdmin = () => {
       <div className="card-body">
         <form className="form-inline">
           <Link to="/supermaster_main/add_admin" className="btn btn-gradient-primary mb-2">
-            <i className="mdi mdi-account-plus"></i> ADD ADMIN
+            <i className="mdi mdi-account-plus"></i> ADD MASTER
           </Link>
         </form>
       </div>
@@ -77,7 +83,7 @@ const ManageAdmin = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Admin List ({userArray?.length})</h4>
+              <h4 className="card-title">Master List ({userArray?.length})</h4>
               <div className="table-responsive">
                 <table className="table table-striped">
                   <thead>
@@ -85,8 +91,8 @@ const ManageAdmin = () => {
                       <th> UserCode </th>
                       <th> Name </th>
                       <th> Reg. Date </th>
-                      <th> Edit User </th>
-                      <th> Delete User </th>
+                      <th> Edit Master </th>
+                      <th> Delete Master </th>
                     </tr>
                   </thead>
                   {userArray?.map((entry) => {
@@ -98,17 +104,17 @@ const ManageAdmin = () => {
                     return (
                       <tbody>
                         <tr>
-                          <td>{entry.username}</td>
-                          <td>{entry.fullname}</td>
+                          <td>{entry ?? "-"}</td>
+                          <td>{entry.fullname ?? "-"}</td>
                           <td>{formattedDate} ({formattedTime})</td>
-                          <td>
+                          <td onClick={() => handleEdit(entry)}> 
                             <i
                               className="mdi mdi-pencil-box"
                               style={{ fontSize: 'large' }}
                             ></i>
                           </td>
                           <td>
-                            <button className='btn btn-primary' onClick={() => { suspendUser(entry.username) }}>Suspend</button>
+                            <button className='btn btn-primary' onClick={() => { suspendUser(entry) }}>Suspend</button>
                           </td>
                         </tr>
                       </tbody>

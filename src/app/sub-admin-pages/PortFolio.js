@@ -50,6 +50,7 @@ export const PortFolios = () => {
 
   const fetchPortfolio = async () => {
     const res = await GET_PORTFOLIO_ALLUSERS(username);
+    console.log(res)
     const singleArray = [].concat(...res);
     const singleArray1 = singleArray.flatMap(entry => entry.portfolio);
     setOrderArray(singleArray1);

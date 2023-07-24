@@ -21,7 +21,8 @@ export const Backoffice = () => {
 
     const fun = async () => {
       const res = await FETCH_BACKOFFICE_SUBADMIN(username);
-      setArray(res.reverse());
+      const singleArray = [].concat(...res);
+      setArray(singleArray);
     }
 
     fun();
@@ -51,9 +52,9 @@ export const Backoffice = () => {
                     <tr>
 
                       <th> Payeename </th>
-                      <th> Type </th>
+                      <th> Payment Type </th>
                       <th> Amount </th>
-                      <th> Date </th>
+                      <th> Type </th>
 
 
                     </tr>
@@ -63,20 +64,20 @@ export const Backoffice = () => {
 
                     {
                       array?.length > 0 ? array?.map((entry) => {
-
+{/* 
                         const dateObj = new Date(entry.createdAt);
                         const day = dateObj.getDate();
                         const month = dateObj.toLocaleString('default', { month: 'short' }).toUpperCase();
                         const year = dateObj.getFullYear();
-                        const formattedDate = `${day}${month}${year}`;
+                        const formattedDate = `${day}${month}${year}`; */}
 
                         return (
                           <tr>
 
-                            <td> {entry.payment_events.payeename ?? "-"} </td>
-                            <td> {entry.payment_events.p_type ?? "-"} </td>
-                            <td> {entry.payment_events.price ?? "-"} </td>
-                            <td> {formattedDate ?? "-"} </td>
+                            <td> {entry?.username ?? "-"} </td>
+                            <td> {entry?.payment_events.p_type ?? "-"} </td>
+                            <td> {entry?.payment_events.price ?? "-"} </td>
+                            <td> {entry?.payment_events.type ?? "-"} </td>
                           </tr>
                         )
 

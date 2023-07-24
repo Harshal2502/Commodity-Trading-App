@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ADMIN_USERS, CREDIT_CASHBALANCE_ADMIN, CREDIT_CASHBALANCE_USER, CREDIT_VIRTUALBALANCE_USER, DEBIT_CASHBALANC_ADMIN, DEBIT_CASHBALANC_USER, DEBIT_VIRTUALBALANC_USER, SUPERADMIN_ADMINS } from "../../utils/API";
+import { ADMIN_USERS, CREDIT_CASHBALANCE_ADMIN, CREDIT_CASHBALANCE_SUPERADMIN, CREDIT_CASHBALANCE_USER, CREDIT_VIRTUALBALANCE_SUPERADMIN, CREDIT_VIRTUALBALANCE_USER, DEBIT_CASHBALANC_ADMIN, DEBIT_CASHBALANC_SUPERADMIN, DEBIT_CASHBALANC_USER, DEBIT_VIRTUALBALANC_SUPERADMIN, DEBIT_VIRTUALBALANC_USER, SUPERADMIN_ADMINS, SUPERMASTER_SUPERADMINS } from "../../utils/API";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const SuperTransaction = () => {
+const MasterTransaction = () => {
 
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const SuperTransaction = () => {
     });
 
     const [clientArray, setClientArray] = useState();
-    const [adminArray, setAdminArray] = useState();
+    const [adminArray, setAdminArray] = useState([]);
     const [clientItem, setclientItem] = useState();
     const [adminItem, setadminItem] = useState();
     const [amount, setAmount] = useState();
@@ -36,7 +36,7 @@ const SuperTransaction = () => {
     const [loader3, setLoader3] = useState();
 
     useEffect(() => {
-        fetchUsers();
+        // fetchUsers();
         fetchAdmin();
     }, []);
 
@@ -50,8 +50,9 @@ const SuperTransaction = () => {
     }
 
     const fetchAdmin = async () => {
-        const res = await SUPERADMIN_ADMINS(username);
-        setAdminArray(res.admins);
+        // SuperMaster not found
+        const res = await SUPERMASTER_SUPERADMINS(username);
+        // setAdminArray(res);
     }
 
     const handleClientChange1 = (e) => {
@@ -103,7 +104,7 @@ const SuperTransaction = () => {
 
         setLoader2(true);
         if (option1 === "cash") {
-            const res = await CREDIT_CASHBALANCE_ADMIN(username, adminItem, amount1);
+            const res = await CREDIT_CASHBALANCE_SUPERADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -113,7 +114,7 @@ const SuperTransaction = () => {
         }
 
         else if (option1 === "virtual") {
-            const res = await CREDIT_VIRTUALBALANCE_USER(username, adminItem, amount1);
+            const res = await CREDIT_VIRTUALBALANCE_SUPERADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -175,7 +176,7 @@ const SuperTransaction = () => {
 
         setLoader3(true);
         if (option1 === "cash") {
-            const res = await DEBIT_CASHBALANC_ADMIN(username, adminItem, amount);
+            const res = await DEBIT_CASHBALANC_SUPERADMIN(username, adminItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -185,7 +186,7 @@ const SuperTransaction = () => {
         }
 
         else if (option1 === "virtual") {
-            const res = await DEBIT_VIRTUALBALANC_USER(username, clientItem, amount);
+            const res = await DEBIT_VIRTUALBALANC_SUPERADMIN(username, clientItem, amount1);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
@@ -207,14 +208,8 @@ const SuperTransaction = () => {
 
     return (
         <>
-            <div className="page-header">
+            {/* <div className="page-header">
                 <h3 className="page-title">User Transaction </h3>
-                {/* <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Transaction </a></li>
-                        <li className="breadcrumb-item active" aria-current="page">Make Transactions</li>
-                    </ol>
-                </nav> */}
             </div>
 
             <div className="card">
@@ -254,7 +249,7 @@ const SuperTransaction = () => {
                 </div>
             </div>
 
-            <br></br>
+            <br></br> */}
             <div className="page-header">
                 <h3 className="page-title"> Admin Transaction </h3>
                 {/* <nav aria-label="breadcrumb">
@@ -271,11 +266,11 @@ const SuperTransaction = () => {
 
                         <div style={{ paddingLeft: "0", marginTop: "10px" }} className="input-group mb-2 mr-sm-1 col-md-9 col-lg-5 col-xl-2">
                             <select class="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-12" onChange={handleClientChange1} id="subadmin_place_order_usercode"  >
-                                <option value="all" selected disabled> Admin (All) </option>
+                                <option value="all" selected disabled> Supermaster (All) </option>
                                 {adminArray?.map((entry) => {
 
                                     return (
-                                        <option value={entry.username}>{entry.username}</option>
+                                        <option value={entry}>{entry}</option>
                                     )
                                 })}
                             </select>
@@ -305,4 +300,4 @@ const SuperTransaction = () => {
     )
 }
 
-export default SuperTransaction;
+export default MasterTransaction;
