@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ADMIN_USERS, GETALL_CANCEL_ORDERS_ADMIN, GETALL_EXPIRED_ORDERS_ADMIN, GETALL_ORDERS_ADMIN, GET_ALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN, GETALL_SQRD_ORDERS_ADMIN, FETCH_ALL_ORDERS, DELETEORDER } from '../../utils/API';
+import { ADMIN_USERS, GETALL_CANCEL_ORDERS_ADMIN, GETALL_EXPIRED_ORDERS_ADMIN, GETALL_ORDERS_ADMIN, GET_ALL_PENDING_ORDERS_ADMIN, GETALL_PLACED_ORDERS_ADMIN, GETALL_SQRD_ORDERS_ADMIN, FETCH_ALL_ORDERS, DELETEORDER, SUPERADMIN_ADMINS, SUPERMASTER_SUPERADMINS } from '../../utils/API';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -19,38 +19,63 @@ const OrderDetails = () => {
 
     const [sort, setSort] = useState();
     const [orderArray, setOrderArray] = useState([]);
+    const [loader, setLoader] = useState(false);
+    const [loader1, setLoader1] = useState(false);
     const [sortArray, setSortArray] = useState([]);
+    const [subadmin, setsubadmin] = useState("");
+    const [superadmin, setsuperadmin] = useState("");
+    const [subadminArray, setsubadminArray] = useState([]);
+    const [superadminArray, setsuperadminArray] = useState([]);
+    const [loadingIndex, setLoadingIndex] = useState();
 
     useEffect(() => {
         const fun = async () => {
-            const res = await FETCH_ALL_ORDERS(username); // We have to pass 3rd role from top to this API call and no API to fetch all admins with master
-            console.log(res);
-            // const singleArray = [].concat(...res);
-            // setOrderArray(singleArray);
-            // setSortArray(singleArray);
+            const res = await SUPERMASTER_SUPERADMINS(username);
+            setsuperadminArray(res);
         }
         fun();
-    }, [username])
+    }, [username]);
+
+    useEffect(() => {
+        const fun = async () => {
+            const res = await SUPERADMIN_ADMINS(superadmin);
+            setsubadminArray(res);
+        }
+        fun();
+    }, [superadmin])
 
     const applySort = async () => {
-        if (sort === "all") {
-            setSortArray(orderArray);
-            return;
+
+        setLoader1(true);
+
+        const res = await FETCH_ALL_ORDERS(subadmin);
+        if (res !== null) {
+            const singleArray = [].concat(...res);
+            setSortArray(singleArray);
         }
-        setSortArray(orderArray.filter((order) => order.order_status === sort));
+
+        setLoader1(false);
     }
 
-    const handleClick = (e) => {
-        const res = DELETEORDER(username, e.taregt.value);
-        console.log(res);
-        toast.info(res.message, {
+    const handleClick = async (e, user, index) => {
+
+        setLoadingIndex(index);
+        setLoader(true);
+        const res = await DELETEORDER(user, e.target.value);
+
+        toast.info(res.status, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             hideProgressBar: false,
             pauseOnHover: true,
         });
-    }
 
+        setLoader(false);
+        const res1 = await FETCH_ALL_ORDERS(subadmin);
+        const singleArray = [].concat(...res1);
+        setSortArray(singleArray);
+
+    }
 
     return (
         <div>
@@ -58,8 +83,8 @@ const OrderDetails = () => {
                 <h3 className="page-title"> Manage Orders </h3>
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Manage Orders</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">All Orders Details</li>
+                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}> Manage Orders </a></li>
+                        <li className="breadcrumb-item active" aria-current="page"> All Orders Details </li>
                     </ol>
                 </nav>
             </div>
@@ -67,18 +92,29 @@ const OrderDetails = () => {
             <div className="col-12 grid-margin stretch-card">
                 <div className="card">
                     <div className="card-body">
+
                         <form className="form-inline">
+                            <select onChange={(e) => setsuperadmin(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-4 col-xl-4" >
 
-                            <select onChange={(e) => setSort(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
-
-                                <option value="all" selected>All Orders</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Squaredoff">Executed</option>
-                                <option value="Placed">Placed</option>
-                                <option value="Cancelled">Cancelled</option>
-                                <option value="Expired">Expired</option>
+                                <option selected disabled>Select SuperMaster</option>
+                                {superadminArray?.map((entry) => {
+                                    return (
+                                        <option value={entry} key={entry}> {entry} </option>
+                                    )
+                                })}
                             </select>
-                            <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">Show</button>
+
+                            <select onChange={(e) => setsubadmin(e.target.value)} className="form-control mb-2 mr-sm-2 col-md-10 col-lg-4 col-xl-4" >
+
+                                <option selected disabled>Select Master</option>
+                                {subadminArray?.map((entry) => {
+                                    return (
+                                        <option value={entry} key={entry}> {entry} </option>
+                                    )
+                                })}
+                            </select>
+
+                            <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">{loader1 ? <span className='button-loader'></span> : "Show"}</button>
                         </form>
                     </div>
                 </div>
@@ -111,9 +147,9 @@ const OrderDetails = () => {
                                         </tr>
                                     </thead>
 
-                                    {sortArray?.map((entry) => {
+                                    {sortArray?.map((entry, index) => {
 
-                                        if (entry === null) return;
+                                        {/* if (entry === null) return; */ }
 
                                         const dateObj = new Date(entry.asset.expiredat);
                                         const day = dateObj.getDate();
@@ -130,7 +166,7 @@ const OrderDetails = () => {
 
 
                                         return (
-                                            <tbody>
+                                            <tbody key={entry.order_id}>
                                                 <tr>
                                                     <td> {entry?.username ?? "-"} </td>
                                                     <td> {entry?.order_id ?? "-"} </td>
@@ -142,7 +178,7 @@ const OrderDetails = () => {
                                                     <td> {formattedDate3 ?? "-"} </td>
                                                     <td> {entry?.CFstatus ?? "-"} </td>
                                                     <td> {entry?.order_status ?? "-"} </td>
-                                                    <td> <button onClick={handleClick} value={entry.order_id} className='btn btn-primary'> S/O </button> </td>
+                                                    <td> <button disabled={loader} onClick={(e) => handleClick(e, entry.username, index)} value={entry.order_id} className='btn btn-primary'> {loader && loadingIndex === index ? <span className='button-loader'></span> : "Terminate"} </button> </td>
                                                 </tr>
                                             </tbody>
                                         )

@@ -38,7 +38,7 @@ const MasterTransaction = () => {
     useEffect(() => {
         // fetchUsers();
         fetchAdmin();
-    }, []);
+    }, [username]);
 
     const fetchUsers = async () => {
         const res = await ADMIN_USERS(username);
@@ -51,8 +51,9 @@ const MasterTransaction = () => {
 
     const fetchAdmin = async () => {
         // SuperMaster not found
+        console.log(username)
         const res = await SUPERMASTER_SUPERADMINS(username);
-        // setAdminArray(res);
+        console.log(res);
     }
 
     const handleClientChange1 = (e) => {

@@ -19,9 +19,12 @@ const OrderDetails = () => {
 
     const [sort, setSort] = useState();
     const [orderArray, setOrderArray] = useState([]);
+    const [loader, setLoader] = useState(false);
+    const [loader1, setLoader1] = useState(false);
     const [sortArray, setSortArray] = useState([]);
     const [subadmin, setsubadmin] = useState("");
     const [subadminArray, setsubadminArray] = useState([]);
+    const [loadingIndex, setLoadingIndex] = useState();
 
     useEffect(() => {
         const fun = async () => {
@@ -32,21 +35,37 @@ const OrderDetails = () => {
     }, [username]);
 
     const applySort = async () => {
+
+        setLoader1(true);
+
         const res = await FETCH_ALL_ORDERS(subadmin);
-        const singleArray = [].concat(...res);
-        setSortArray(singleArray);
+        if (res !== null) {
+            const singleArray = [].concat(...res);
+            setSortArray(singleArray);
+        }
+
+        setLoader1(false);
     }
 
-    const handleClick = async (e, user) => {
+    const handleClick = async (e, user, index) => {
+
+        setLoadingIndex(index);
+        setLoader(true);
         const res = await DELETEORDER(user, e.target.value);
+
         toast.info(res.status, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 3000,
             hideProgressBar: false,
             pauseOnHover: true,
         });
-    }
 
+        setLoader(false);
+        const res1 = await FETCH_ALL_ORDERS(subadmin);
+        const singleArray = [].concat(...res1);
+        setSortArray(singleArray);
+
+    }
 
     return (
         <div>
@@ -54,8 +73,8 @@ const OrderDetails = () => {
                 <h3 className="page-title"> Manage Orders </h3>
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Manage Orders</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">All Orders Details</li>
+                        <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}> Manage Orders </a></li>
+                        <li className="breadcrumb-item active" aria-current="page"> All Orders Details </li>
                     </ol>
                 </nav>
             </div>
@@ -74,7 +93,7 @@ const OrderDetails = () => {
                                     )
                                 })}
                             </select>
-                            <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">Show</button>
+                            <button onClick={(e) => { e.preventDefault(); applySort(); }} className="btn btn-gradient-primary mb-2">{loader1 ? <span className='button-loader'></span> : "Show"}</button>
                         </form>
                     </div>
                 </div>
@@ -107,9 +126,9 @@ const OrderDetails = () => {
                                         </tr>
                                     </thead>
 
-                                    {sortArray?.map((entry) => {
+                                    {sortArray?.map((entry, index) => {
 
-                                        {/* if (entry === null) return; */}
+                                        {/* if (entry === null) return; */ }
 
                                         const dateObj = new Date(entry.asset.expiredat);
                                         const day = dateObj.getDate();
@@ -126,7 +145,7 @@ const OrderDetails = () => {
 
 
                                         return (
-                                            <tbody>
+                                            <tbody key={entry.order_id}>
                                                 <tr>
                                                     <td> {entry?.username ?? "-"} </td>
                                                     <td> {entry?.order_id ?? "-"} </td>
@@ -138,7 +157,7 @@ const OrderDetails = () => {
                                                     <td> {formattedDate3 ?? "-"} </td>
                                                     <td> {entry?.CFstatus ?? "-"} </td>
                                                     <td> {entry?.order_status ?? "-"} </td>
-                                                    <td> <button onClick={(e) => handleClick(e, entry.username)} value={entry.order_id} className='btn btn-primary'> Terminate </button> </td>
+                                                    <td> <button disabled={loader} onClick={(e) => handleClick(e, entry.username, index)} value={entry.order_id} className='btn btn-primary'> {loader && loadingIndex === index ? <span className='button-loader'></span> : "Terminate"} </button> </td>
                                                 </tr>
                                             </tbody>
                                         )

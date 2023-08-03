@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap';
-import { UPDATE_PASSWORD_ADMIN, UPDATE_PASSWORD_USER } from '../../utils/API';
+import { ADMIN_USERS, UPDATE_BRKG, UPDATE_BRKG_ALLUSERS, UPDATE_PASSWORD_ADMIN, UPDATE_PASSWORD_USER } from '../../utils/API';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
@@ -22,6 +22,30 @@ export const Settingss = () => {
   const [oldpassword, setOldpassword] = useState()
   const [newpassword, setNewpassword] = useState()
   const [confirmpassword, setConfirmpassword] = useState()
+  const [clientArray, setClientArray] = useState()
+  const [clientItem, setClientItem] = useState("all")
+  const [fixbrokereage_MCX, setFixbrokereageMCX] = useState({
+    SILVER: 0,
+    SILVERM: 0,
+    SILVERMIC: 0,
+    GOLD: 0,
+    GOLDM: 0,
+    GOLDMIC: 0,
+    COPPER: 0,
+    COPPERMIC: 0,
+    LEAD: 0,
+    LEADMIC: 0,
+    ZINC: 0,
+    ZINCMIC: 0,
+    NATURALGAS: 0,
+    NATURALGASMIC: 0,
+    CRUDEOIL: 0,
+    CRUDEOILMIC: 0,
+  });
+
+  useEffect(() => {
+    fetchUsers();
+  }, [username])
 
   const handlePasswordSave = async (e) => {
 
@@ -44,13 +68,38 @@ export const Settingss = () => {
 
   }
 
+  const fetchUsers = async () => {
+    const res = await ADMIN_USERS(username);
+    setClientArray(res.users);
+  }
+
+  const handleSave = async () => {
+    if (clientItem === "all") {
+      const res = await UPDATE_BRKG_ALLUSERS(username, Object.values(fixbrokereage_MCX), Object.values(fixbrokereage_MCX));
+      console.log(res);
+    }
+    else {
+      const res = await UPDATE_BRKG(username, clientItem, Object.values(fixbrokereage_MCX), Object.values(fixbrokereage_MCX));
+      console.log(res);
+    }
+  }
+
+  const handleInputChange = (symbol, value) => {
+
+    const parsedValue = parseFloat(value) || 0;
+
+    setFixbrokereageMCX((prevFixbrokereage_MCX) => ({
+      ...prevFixbrokereage_MCX,
+      [symbol]: parsedValue,
+    }));
+
+  };
+
   return (
     <div>
 
-
-
       <div className="page-header">
-        <h3 className="page-title"> Settings  </h3>
+        <h3 className="page-title"> Settings </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Settings</a></li>
@@ -58,25 +107,6 @@ export const Settingss = () => {
           </ol>
         </nav>
       </div>
-
-      {/* <div className="col-12 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">                
-                <form className="form-inline">                           
-                             
-                  <select class="form-control mb-2 mr-sm-2" >
-                    <option selected disabled>Please Select</option>
-                    <option vaue="order">Order Status (All)</option>
-                    <option value="pending">Pending</option>
-                    <option value="excuted">Excuted</option>
-                    <option value="cancelled">Cancelled</option>
-                    <option value="expired">Expired</option>
-                    </select>
-                 <button type="submit" className="btn btn-gradient-primary mb-2">Show</button>
-                </form>
-              </div>
-            </div>
-          </div> */}
 
       <div className="row">
 
@@ -106,34 +136,22 @@ export const Settingss = () => {
               <p className="card-description"> </p>
               <form className="form-inline">
 
-                <select class="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
+                <select onChange={(e) => setClientItem(e.target.value)} class="form-control mb-2 mr-sm-2 col-md-10 col-lg-6 col-xl-9" >
 
                   <option value="all" selected="">Clients (All)</option>
-                  <option value="democ">democ</option>
-                  <option value="haresh123">haresh123</option>
-                  <option value="abc555">abc555</option>
-                  <option value="ashok">ashok</option>
-                  <option value="miraj022">miraj022</option>
-                  <option value="ad01">ad01</option>
-                  <option value="ad02">ad02</option>
-                  <option value="demom">demom</option>
-                  <option value="mjr">mjr</option>
-                  <option value="a332211">a332211</option>
-                  <option value="demorj01">demorj01</option>
-                  <option value="ravi">ravi</option>
-                  <option value="vk90">vk90</option>
-                  <option value="sam123">sam123</option>
+
+                  {clientArray?.map((entry) => {
+
+                    return (
+                      <option value={entry.username}>{entry.username}</option>
+                    )
+                  })}
 
                 </select>
                 <button type="submit" className="btn btn-gradient-primary mb-2">Show</button>
               </form>
 
-
-
-
-
             </div>
-
 
             <div className="card-body">
               <h4 className="card-title">Set brokerage For MCX</h4>
@@ -158,35 +176,27 @@ export const Settingss = () => {
                           </thead>
                           <tbody>
 
-                            <tr>
-                              <td className="py-1"> SILVER</td>
-                              <td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_SILVER" /></td>
-                            </tr>
-                            <tr>
-                              <td className="py-1">SILVERM</td>
-                              <td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_SILVERM" /></td>
-
-                            </tr>
-                            <tr>
-                              <td className="py-1">SILVERMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_SILVERMIC" /></td></tr>
-                            <tr><td className="py-1">GOLD</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_GOLD" /></td></tr>
-                            <tr><td>GOLDM</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_GOLDM" /></td></tr>
-                            <tr><td>GOLDMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_GOLDMIC" /></td></tr>
-                            <tr><td>COPPER</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_COPPER" /></td></tr>
-                            <tr><td>COPPERMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_COPPERMIC" /></td></tr>
-                            <tr><td>LEAD</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_LEAD" /></td></tr>
-                            <tr><td>LEADMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_LEADMIC" /></td></tr>
-                            <tr><td>ZINC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_ZINC" /></td></tr>
-                            <tr><td>ZINCMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_ZINCMIC" /></td></tr>
-                            <tr><td>NATURALGAS</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_NATURALGAS" /></td></tr>
-                            <tr><td>NATURALGASMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_NATURALGASMIC" /></td></tr>
-                            <tr><td>CRUDEOIL</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_CRUDEOIL" /></td></tr>
-                            <tr><td>CRUDEOILMIC</td><td><input class="text-center" type="number" value="0" placeholder="Enter-Fix-Brokerage" id="fix_brkg_mcx_CRUDEOILMIC" /></td></tr>
+                            <tr><td>SILVER</td><td>        <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('SILVER', e.target.value)} />        </td></tr>
+                            <tr><td>SILVERM</td><td>       <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('SILVERM', e.target.value)} />       </td></tr>
+                            <tr><td>SILVERMIC</td><td>     <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('SILVERMIC', e.target.value)} />     </td></tr>
+                            <tr><td>GOLD</td><td>          <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('GOLD', e.target.value)} />          </td></tr>
+                            <tr><td>GOLDM</td><td>         <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('GOLDM', e.target.value)} />         </td></tr>
+                            <tr><td>GOLDMIC</td><td>       <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('GOLDMIC', e.target.value)} />       </td></tr>
+                            <tr><td>COPPER</td><td>        <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('COPPER', e.target.value)} />        </td></tr>
+                            <tr><td>COPPERMIC</td><td>     <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('COPPERMIC', e.target.value)} />     </td></tr>
+                            <tr><td>LEAD</td><td>          <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('LEAD', e.target.value)} />          </td></tr>
+                            <tr><td>LEADMIC</td><td>       <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('LEADMIC', e.target.value)} />       </td></tr>
+                            <tr><td>ZINC</td><td>          <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('ZINC', e.target.value)} />          </td></tr>
+                            <tr><td>ZINCMIC</td><td>       <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('ZINCMIC', e.target.value)} />       </td></tr>
+                            <tr><td>NATURALGAS</td><td>    <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('NATURALGAS', e.target.value)} />    </td></tr>
+                            <tr><td>NATURALGASMIC</td><td> <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('NATURALGASMIC', e.target.value)} /> </td></tr>
+                            <tr><td>CRUDEOIL</td><td>      <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('CRUDEOIL', e.target.value)} />      </td></tr>
+                            <tr><td>CRUDEOILMIC</td><td>   <input class="text-center" type="number" placeholder="0" min="0" onChange={(e) => handleInputChange('CRUDEOILMIC', e.target.value)} />   </td></tr>
 
                           </tbody>
                         </table>
                         <section class="text-right">
-                          <button class="btn btn-primary" onclick="save_fix_brkg_mcx();">SAVE CHANGES</button>
+                          <button class="btn btn-primary" onClick={handleSave}>SAVE CHANGES</button>
                         </section>
 
                       </div>
@@ -195,15 +205,8 @@ export const Settingss = () => {
                 </div>
               </div>
 
-
-
-
-
-
-
             </div>
           </div>
-
 
         </div>
 
@@ -226,24 +229,11 @@ export const Settingss = () => {
                   <Form.Control onChange={(e) => setConfirmpassword(e.target.value)} type="password" className="form-control" id="confirm_password" placeholder="Retype Your New Password Here..." />
                 </Form.Group>
 
-
-
-
                 <button onClick={(e) => handlePasswordSave(e)} className="btn btn-gradient-primary mr-2">Save New Password</button>
-                {/* <button className="btn btn-light">Cancel</button> */}
               </form>
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
 
       </div>
     </div>

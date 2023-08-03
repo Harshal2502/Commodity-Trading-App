@@ -1661,7 +1661,7 @@ export const UPDATE_BRKG_ALLUSERS = async (username_admin, fixbrokereage_MCX, fi
   };
 
   try {
-    const res = await axios.get(API_ROUTES.UPDATE_BRKG_ALLUSERS, body, options);
+    const res = await axios.patch(API_ROUTES.UPDATE_BRKG_ALLUSERS, body, options);
     return res.data;
   }
   catch (error) {
