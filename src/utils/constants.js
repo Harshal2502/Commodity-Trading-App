@@ -1,4 +1,4 @@
-export const BASEAPI_PATH = "http://52.66.105.29:8080";
+export const BASEAPI_PATH = "BACKEND_ENDPOINT";
 
 export const API_ROUTES = {
   LOGIN: BASEAPI_PATH + "/api/user/UserLogin",
